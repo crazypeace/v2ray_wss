@@ -395,7 +395,7 @@ echo -e "$yellow 路径 (path) = ${cyan}${path}$none"
 echo
 echo -e "$yellow 底层传输安全 (TLS) = ${cyan}tls$none"
 echo
-echo "---------- V2Ray vmess URL ----------"
+echo "---------- V2Ray VLESS URL ----------"
 echo -e "$cyan vless://${v2ray_id}@${domain}:443?encryption=none&security=tls&type=ws&host=${domain}&path=${path}#VLESS_WSS_${domain}"echo
 echo
 echo "---------- END -------------"
