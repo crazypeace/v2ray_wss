@@ -369,3 +369,35 @@ service v2ray restart
 echo -e "$yellow重启 CaddyV2$none"
 echo "----------------------------------------------------------------"
 service caddy reload
+
+echo
+echo
+echo "---------- V2Ray 配置信息 -------------"
+echo
+echo -e "$green ---提示..这是 VLESS 服务器配置--- $none"
+echo
+echo -e "$yellow 地址 (Address) = $cyan${domain}$none"
+echo
+echo -e "$yellow 端口 (Port) = ${cyan}443${none}"
+echo
+echo -e "$yellow 用户ID (User ID / UUID) = $cyan${v2ray_id}$none"
+echo
+echo -e "$yellow 流控 (Flow) = ${cyan}空${none}"
+echo
+echo -e "$yellow 加密 (Encryption) = ${cyan}none${none}"
+echo
+echo -e "$yellow 传输协议 (Network) = ${cyan}ws$none"
+echo
+echo -e "$yellow 伪装类型 (header type) = ${cyan}none$none"
+echo
+echo -e "$yellow 伪装域名 (host) = ${cyan}${domain}$none"
+echo
+echo -e "$yellow 路径 (path) = ${cyan}${path}$none"
+echo
+echo -e "$yellow 底层传输安全 (TLS) = ${cyan}tls$none"
+echo
+echo "---------- V2Ray vmess URL ----------"
+echo -e "$cyan vless://${v2ray_id}@${domain}:443?encryption=none&security=tls&type=ws&host=${domain}&path=${path}#VLESS_WSS_${domain}"echo
+echo
+echo "---------- END -------------"
+echo
