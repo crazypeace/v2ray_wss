@@ -237,6 +237,7 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
     },
     "inbounds": [
         {
+            "listen": "localhost",
             "port": $v2ray_port,             // ***
             "protocol": "vless",
             "settings": {
