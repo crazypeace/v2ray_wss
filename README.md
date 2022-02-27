@@ -6,6 +6,9 @@ V2ray最新版本，VLESS_WebSocket_TLS模式，CaddyV2前置解除TLS和path
 bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh)
 ```
 
+脚本中很大部分都是在校验用户的输入。其实照着下面的内容自己配置就行了。
+
+
 # 安装V2ray最新版本
 ```
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
