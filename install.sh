@@ -249,7 +249,6 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
                 ],
                 "decryption": "none"
             },
-            "listen": "127.0.0.1",
             "streamSettings": {
                 "network": "ws"
             },
