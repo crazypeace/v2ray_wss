@@ -45,7 +45,6 @@ sudo apt install caddy
                 ],
                 "decryption": "none"
             },
-            "listen": "127.0.0.1",
             "streamSettings": {
                 "network": "ws"
             },
