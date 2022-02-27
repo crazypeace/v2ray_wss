@@ -203,9 +203,9 @@ done
 
 # 反代伪装网站
 while :; do
-    echo -e "请输入 ${magenta}一个正确的 $none ${cyan}网址$none 用来作为 ${cyan}网站的伪装$none , 例如 https://zelikk.blogspot.com/"
-    read -p "$(echo -e "(默认: [${cyan}https://zelikk.blogspot.com/$none]):")" proxy_site
-    [[ -z $proxy_site ]] && proxy_site="https://zelikk.blogspot.com/"
+    echo -e "请输入 ${magenta}一个正确的 $none ${cyan}网址$none 用来作为 ${cyan}网站的伪装$none , 例如 https://zelikk.blogspot.com"
+    read -p "$(echo -e "(默认: [${cyan}https://zelikk.blogspot.com$none]):")" proxy_site
+    [[ -z $proxy_site ]] && proxy_site="https://zelikk.blogspot.com"
 
     case $proxy_site in
     *[#$]*)
