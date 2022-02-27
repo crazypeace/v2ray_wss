@@ -33,12 +33,12 @@ sudo apt install caddy
     },
     "inbounds": [
         {
-            "port": 你的v2ray内部端口,             // ***
+            "port": 你的v2ray内部端口,             // ***改这里
             "protocol": "vless",
             "settings": {
                 "clients": [
                     {
-                        "id": "你的v2rayID",             // ***
+                        "id": "你的v2rayID",             // ***改这里
                         "level": 1,
                         "alterId": 0
                     }
@@ -135,18 +135,18 @@ sudo apt install caddy
 
 # 配置 /etc/caddy/Caddyfile
 ```
-你的域名
+你的域名     # 改这里
 {
     tls Y3JhenlwZWFjZQ@gmail.com {
         on_demand
     }
     encode gzip
 
-    handle_path /分流path {
-        reverse_proxy localhost:你的v2ray内部端口
+    handle_path /分流path {     # 改这里
+        reverse_proxy localhost:你的v2ray内部端口     # 改这里
     }
     handle {
-        reverse_proxy https://你反代伪装的网站 {
+        reverse_proxy https://你反代伪装的网站 {     # 改这里
             header_up Host {upstream_hostport}
             header_up X-Forwarded-Host {host}
         }
