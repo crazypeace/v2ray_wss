@@ -33,6 +33,7 @@ sudo apt install caddy
     },
     "inbounds": [
         {
+            "listen": "localhost",        
             "port": 你的v2ray内部端口,             // ***改这里
             "protocol": "vless",
             "settings": {
