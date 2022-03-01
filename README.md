@@ -153,3 +153,5 @@ sudo apt install caddy
     }
 }
 ```
+
+# Uninstall
