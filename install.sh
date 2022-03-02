@@ -11,10 +11,23 @@ _magenta() { echo -e ${magenta}$*${none}; }
 _cyan() { echo -e ${cyan}$*${none}; }
 
 error() {
-    echo -e "\n$red 输入错误！$none\n"
+    echo -e "\n$red 输入错误! $none\n"
 }
 
+pause() {
+	read -rsp "$(echo -e "按 $green Enter 回车键 $none 继续....或按 $red Ctrl + C $none 取消.")" -d $'\n'
+	echo
+}
+
+# 说明
+
+
 # 准备工作
+echo -e "$yellow此脚本仅兼容于Debian 10+系统. 如果你的系统不符合,请Ctrl+C退出脚本$none"
+echo -e "可以去 ${cyan}https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2${none} 查看脚本整体思路和关键命令, 以便针对你自己的系统做出调整."
+echo "----------------------------------------------------------------"
+pause
+
 apt update
 apt install -y bash curl sudo jq
 
@@ -31,6 +44,16 @@ curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo apt-key
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
 sudo apt update
 sudo apt install caddy
+
+# 打开BBR
+echo -e "$yellow打开BBR$none"
+echo "----------------------------------------------------------------"
+sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
+sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control = bbr" >>/etc/sysctl.conf
+echo "net.core.default_qdisc = fq" >>/etc/sysctl.conf
+sysctl -p >/dev/null 2>&1
+echo
 
 # 是否纯IPv6小鸡, 到底
 while :; do
@@ -59,7 +82,7 @@ while :; do
 done
 
 # 配置 VLESS_WebSocket_TLS 模式, 需要:域名, 分流path, 反代网站, V2ray内部端口, UUID
-echo -e "$yellow安装 VLESS_WebSocket_TLS 模式$none"
+echo -e "$yellow配置 VLESS_WebSocket_TLS 模式$none"
 echo "----------------------------------------------------------------"
 
 # UUID
@@ -86,7 +109,7 @@ done
 # V2ray内部端口
 random=$(shuf -i20001-65535 -n1)
 while :; do
-    echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"]，不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
+    echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"], 不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
     read -p "$(echo -e "(默认端口: ${cyan}${random}$none):")" v2ray_port
     [ -z "$v2ray_port" ] && v2ray_port=$random
     case $v2ray_port in
@@ -117,8 +140,8 @@ done
 # 域名
 while :; do
     echo
-    echo -e "请输入一个 ${magenta}正确的域名${none}，一定一定一定要正确，不！能！出！错！"
-    read -p "(例如：233blog.com): " domain
+    echo -e "请输入一个 ${magenta}正确的域名${none}, 一定一定一定要正确, 不! 能! 出! 错! "
+    read -p "(例如: 233blog.com): " domain
     [ -z "$domain" ] && error && continue
     echo
     echo
