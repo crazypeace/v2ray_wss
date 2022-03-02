@@ -8,6 +8,14 @@ bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/r
 
 脚本中很大部分都是在校验用户的输入。其实照着下面的内容自己配置就行了。
 
+# 打开BBR
+```
+sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
+sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control = bbr" >>/etc/sysctl.conf
+echo "net.core.default_qdisc = fq" >>/etc/sysctl.conf
+sysctl -p >/dev/null 2>&1
+```
 
 # 安装V2ray最新版本
 ```
