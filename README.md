@@ -165,3 +165,8 @@ sudo apt install caddy
 ```
 
 # Uninstall
+```
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
+rm /etc/apt/sources.list.d/caddy-stable.list
+apt remove -y caddy
+```
