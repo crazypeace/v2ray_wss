@@ -20,14 +20,12 @@ pause() {
 }
 
 # 说明
-
-
-# 准备工作
 echo -e "$yellow此脚本仅兼容于Debian 10+系统. 如果你的系统不符合,请Ctrl+C退出脚本$none"
 echo -e "可以去 ${cyan}https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2${none} 查看脚本整体思路和关键命令, 以便针对你自己的系统做出调整."
 echo "----------------------------------------------------------------"
 pause
 
+# 准备工作
 apt update
 apt install -y bash curl sudo jq
 
