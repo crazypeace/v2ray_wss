@@ -23,6 +23,7 @@ sysctl -p >/dev/null 2>&1
 ```
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 ```
+
 # 安装CaddyV2最新版本
 
 ```
@@ -170,3 +171,6 @@ bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/
 rm /etc/apt/sources.list.d/caddy-stable.list
 apt remove -y caddy
 ```
+
+# 后记
+对于喜欢V2rayN PAC模式的朋友，实测客户端可以用 V2rayN v3.29 + V2ray-core V4.44.0
