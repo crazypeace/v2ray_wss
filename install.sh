@@ -413,7 +413,7 @@ echo -e "$yellow 伪装类型 (header type) = ${cyan}none$none"
 echo
 echo -e "$yellow 伪装域名 (host) = ${cyan}${domain}$none"
 echo
-echo -e "$yellow 路径 (path) = ${cyan}${path}$none"
+echo -e "$yellow 路径 (path) = ${cyan}/${path}$none"
 echo
 echo -e "$yellow 底层传输安全 (TLS) = ${cyan}tls$none"
 echo
