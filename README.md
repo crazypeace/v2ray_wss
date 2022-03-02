@@ -3,6 +3,7 @@ V2ray最新版本，VLESS_WebSocket_TLS模式，CaddyV2前置解除TLS和path
 
 # 一键执行
 ```
+apt update
 apt install -y curl
 bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh)
 ```
