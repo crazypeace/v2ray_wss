@@ -20,6 +20,7 @@ pause() {
 }
 
 # 说明
+echo
 echo -e "$yellow此脚本仅兼容于Debian 10+系统. 如果你的系统不符合,请Ctrl+C退出脚本$none"
 echo -e "可以去 ${cyan}https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2${none} 查看脚本整体思路和关键命令, 以便针对你自己的系统做出调整."
 echo "----------------------------------------------------------------"
@@ -30,11 +31,13 @@ apt update
 apt install -y bash curl sudo jq
 
 # 安装V2ray最新版本
+echo
 echo -e "$yellow安装V2ray最新版本$none"
 echo "----------------------------------------------------------------"
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 
 # 安装CaddyV2最新版本
+echo
 echo -e "$yellow安装CaddyV2最新版本$none"
 echo "----------------------------------------------------------------"
 sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
@@ -44,6 +47,7 @@ sudo apt update
 sudo apt install caddy
 
 # 打开BBR
+echo
 echo -e "$yellow打开BBR$none"
 echo "----------------------------------------------------------------"
 sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
@@ -80,6 +84,7 @@ while :; do
 done
 
 # 配置 VLESS_WebSocket_TLS 模式, 需要:域名, 分流path, 反代网站, V2ray内部端口, UUID
+echo
 echo -e "$yellow配置 VLESS_WebSocket_TLS 模式$none"
 echo "----------------------------------------------------------------"
 
@@ -247,6 +252,7 @@ while :; do
 done
 
 # 配置 /usr/local/etc/v2ray/config.json
+echo
 echo -e "$yellow配置 /usr/local/etc/v2ray/config.json$none"
 echo "----------------------------------------------------------------"
 cat >/usr/local/etc/v2ray/config.json <<-EOF
@@ -359,6 +365,7 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
 EOF
 
 # 配置 /etc/caddy/Caddyfile
+echo
 echo -e "$yellow配置 /etc/caddy/Caddyfile$none"
 echo "----------------------------------------------------------------"
 cat >/etc/caddy/Caddyfile <<-EOF
@@ -382,11 +389,13 @@ $domain
 EOF
 
 # 重启 V2Ray
+echo
 echo -e "$yellow重启 V2Ray$none"
 echo "----------------------------------------------------------------"
 service v2ray restart
 
 # 重启 CaddyV2
+echo
 echo -e "$yellow重启 CaddyV2$none"
 echo "----------------------------------------------------------------"
 service caddy reload
