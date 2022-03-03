@@ -172,9 +172,9 @@ while :; do
     else
         if [[ "$record" == [Yy] ]]; then
             if [[ $net_stack == "ipv4" ]]; then
-                test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq '.Answer[0].data' | sed 's/\"//g')
+                test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
             else
-                test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq '.Answer[0].data' | sed 's/\"//g')
+                test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq -r '.Answer[0].data')
             fi
 
             if [[ $test_domain != $ip ]]; then
