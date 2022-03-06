@@ -44,7 +44,7 @@ sudo apt install caddy
     },
     "inbounds": [
         {
-            "listen": "localhost",        
+            "listen": "127.0.0.1",        
             "port": 你的v2ray内部端口,             // ***改这里
             "protocol": "vless",
             "settings": {
@@ -148,13 +148,11 @@ sudo apt install caddy
 ```
 你的域名     # 改这里
 {
-    tls Y3JhenlwZWFjZQ@gmail.com {
-        on_demand
-    }
+    tls Y3JhenlwZWFjZQ@gmail.com
     encode gzip
 
     handle_path /分流path {     # 改这里
-        reverse_proxy localhost:你的v2ray内部端口     # 改这里
+        reverse_proxy 127.0.0.1:你的v2ray内部端口     # 改这里
     }
     handle {
         reverse_proxy https://你反代伪装的网站 {     # 改这里
