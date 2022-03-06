@@ -175,7 +175,7 @@ while :; do
             if [[ "$test_domain" == "null" ]]; then
                 test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq -r '.Answer[0].data')
             fi
-                    
+
             if [[ $test_domain != $ip ]]; then
                 echo
                 echo -e "$red 检测域名解析错误....$none"
@@ -370,9 +370,7 @@ echo "----------------------------------------------------------------"
 cat >/etc/caddy/Caddyfile <<-EOF
 $domain
 {
-    tls Y3JhenlwZWFjZQ@gmail.com {
-        on_demand
-    }
+    tls Y3JhenlwZWFjZQ@gmail.com
     encode gzip
 
     handle_path /$path {
