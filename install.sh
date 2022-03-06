@@ -172,7 +172,7 @@ while :; do
     else
         if [[ "$record" == [Yy] ]]; then
             test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
-            if [[ "$t{est_domain}" == "null" ]]; then
+            if [[ "${test_domain}" == "null" ]]; then
                 test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq -r '.Answer[0].data')
             fi
             
