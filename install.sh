@@ -57,31 +57,31 @@ echo "net.core.default_qdisc = fq" >>/etc/sysctl.conf
 sysctl -p >/dev/null 2>&1
 echo
 
-# 是否纯IPv6小鸡, 到底
-while :; do
-    read -p "$(echo -e "(是否纯IPv6小鸡: [${magenta}Y$none]):") " record
-    if [[ -z "$record" ]]; then
-        error
-    else
-        if [[ "$record" == [Yy] ]]; then
-            net_stack="ipv6"
-            echo
-            echo
-            echo -e "$yellow 以下流程按纯IPv6的环境执行$none"
-            echo "----------------------------------------------------------------"
-            echo
-            break
-        else
-            net_stack="ipv4"
-            echo
-            echo
-            echo -e "$yellow 以下流程按IPv4的环境执行$none"
-            echo "----------------------------------------------------------------"
-            echo
-            break
-        fi
-    fi
-done
+# # 是否纯IPv6小鸡, 到底
+# while :; do
+#     read -p "$(echo -e "(是否纯IPv6小鸡: [${magenta}Y$none]):") " record
+#     if [[ -z "$record" ]]; then
+#         error
+#     else
+#         if [[ "$record" == [Yy] ]]; then
+#             net_stack="ipv6"
+#             echo
+#             echo
+#             echo -e "$yellow 以下流程按纯IPv6的环境执行$none"
+#             echo "----------------------------------------------------------------"
+#             echo
+#             break
+#         else
+#             net_stack="ipv4"
+#             echo
+#             echo
+#             echo -e "$yellow 以下流程按IPv4的环境执行$none"
+#             echo "----------------------------------------------------------------"
+#             echo
+#             break
+#         fi
+#     fi
+# done
 
 # 配置 VLESS_WebSocket_TLS 模式, 需要:域名, 分流path, 反代网站, V2ray内部端口, UUID
 echo
@@ -171,12 +171,9 @@ while :; do
         error
     else
         if [[ "$record" == [Yy] ]]; then
-            if [[ $net_stack == "ipv4" ]]; then
-                test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
-            else
-                test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq -r '.Answer[0].data')
-            fi
-
+            test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
+            [[ -z "$test_domain" ]] && test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq -r '.Answer[0].data')
+            
             if [[ $test_domain != $ip ]]; then
                 echo
                 echo -e "$red 检测域名解析错误....$none"
