@@ -263,7 +263,7 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
     },
     "inbounds": [
         {
-            "listen": "localhost",
+            "listen": "127.0.0.1",
             "port": $v2ray_port,             // ***
             "protocol": "vless",
             "settings": {
@@ -374,7 +374,7 @@ $domain
     encode gzip
 
     handle_path /$path {
-        reverse_proxy localhost:$v2ray_port
+        reverse_proxy 127.0.0.1:$v2ray_port
     }
     handle {
         reverse_proxy $proxy_site {
