@@ -172,10 +172,10 @@ while :; do
     else
         if [[ "$record" == [Yy] ]]; then
             test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
-            if [[ "${test_domain}" == "" ]]; then
+            if [[ "$test_domain" == "null" ]]; then
                 test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq -r '.Answer[0].data')
             fi
-            
+                    
             if [[ $test_domain != $ip ]]; then
                 echo
                 echo -e "$red 检测域名解析错误....$none"
