@@ -309,12 +309,9 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
     ],
     "dns": {
         "servers": [
-            "https+local://dns.google/dns-query",
-            "https+local://cloudflare-dns.com/dns-query",
+            "https+local://8.8.8.8/dns-query",
             "8.8.8.8",
-            "2001:4860:4860::8888",
             "1.1.1.1",
-            "2606:4700:4700::1111",
             "localhost"
         ]
     },
