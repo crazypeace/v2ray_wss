@@ -147,6 +147,7 @@ while :; do
         if [[ "$record" == [Yy] ]]; then
             test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
             if [[ "$test_domain" == "null" ]]; then
+                network_stack="ipv6"
                 test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq -r '.Answer[0].data')
             fi
 
@@ -274,11 +275,6 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
             "protocol": "blackhole",
             "settings": {},
             "tag": "blocked"
-            },
-        {
-            "protocol": "mtproto",
-            "settings": {},
-            "tag": "tg-out"
         }
     ],
     "dns": {
@@ -315,24 +311,12 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
             },
             {
                 "type": "field",
-                "inboundTag": ["tg-in"],
-                "outboundTag": "tg-out"
-            },
-            {
-                "type": "field",
                 "protocol": [
                     "bittorrent"
                 ],
                 "outboundTag": "blocked"
             }
         ]
-    },
-    "transport": {
-        "kcpSettings": {
-            "uplinkCapacity": 100,
-            "downlinkCapacity": 100,
-            "congestion": true
-        }
     }
 }
 EOF
@@ -348,7 +332,7 @@ $domain
     encode gzip
 
     handle_path /$path {
-        reverse_proxy 127.0.0.1:$v2ray_port
+        reverse_proxy localhost:$v2ray_port
     }
     handle {
         reverse_proxy $proxy_site {
@@ -358,6 +342,14 @@ $domain
     }
 }
 EOF
+
+# 如果是 IPv6 小鸡，用 WARP 创建 IPv4
+if [[ "$network_stack" == "ipv6" ]]; then
+    echo
+    echo -e "$yellow这是一个 IPv6 小鸡，用 WARP 创建 IPv4$none"
+    echo "----------------------------------------------------------------"
+    bash <(curl -fsSL git.io/warp.sh) 4
+fi
 
 # 重启 V2Ray
 echo
