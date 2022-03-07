@@ -81,11 +81,6 @@ sudo apt install caddy
             "protocol": "blackhole",
             "settings": {},
             "tag": "blocked"
-            },
-        {
-            "protocol": "mtproto",
-            "settings": {},
-            "tag": "tg-out"
         }
     ],
     "dns": {
@@ -122,24 +117,12 @@ sudo apt install caddy
             },
             {
                 "type": "field",
-                "inboundTag": ["tg-in"],
-                "outboundTag": "tg-out"
-            },
-            {
-                "type": "field",
                 "protocol": [
                     "bittorrent"
                 ],
                 "outboundTag": "blocked"
             }
         ]
-    },
-    "transport": {
-        "kcpSettings": {
-            "uplinkCapacity": 100,
-            "downlinkCapacity": 100,
-            "congestion": true
-        }
     }
 }
 ```
@@ -152,7 +135,7 @@ sudo apt install caddy
     encode gzip
 
     handle_path /分流path {     # 改这里
-        reverse_proxy 127.0.0.1:你的v2ray内部端口     # 改这里
+        reverse_proxy localhost:你的v2ray内部端口     # 改这里
     }
     handle {
         reverse_proxy https://你反代伪装的网站 {     # 改这里
@@ -161,6 +144,11 @@ sudo apt install caddy
         }
     }
 }
+```
+
+# 如果是 IPv6 only 的小鸡，用 WARP 添加 IPv4 能力
+```
+bash <(curl -fsSL git.io/warp.sh) 4
 ```
 
 # Uninstall
