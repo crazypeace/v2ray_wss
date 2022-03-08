@@ -343,14 +343,6 @@ $domain
 }
 EOF
 
-# 如果是 IPv6 小鸡，用 WARP 创建 IPv4
-if [[ "$network_stack" == "ipv6" ]]; then
-    echo
-    echo -e "$yellow这是一个 IPv6 小鸡，用 WARP 创建 IPv4$none"
-    echo "----------------------------------------------------------------"
-    bash <(curl -fsSL git.io/warp.sh) 4
-fi
-
 # 重启 V2Ray
 echo
 echo -e "$yellow重启 V2Ray$none"
@@ -362,6 +354,27 @@ echo
 echo -e "$yellow重启 CaddyV2$none"
 echo "----------------------------------------------------------------"
 service caddy reload
+
+# 如果是 IPv6 小鸡，用 WARP 创建 IPv4
+if [[ "$network_stack" == "ipv6" ]]; then
+    echo
+    echo -e "$yellow这是一个 IPv6 小鸡，用 WARP 创建 IPv4$none"
+    echo "----------------------------------------------------------------"
+    pause
+    bash <(curl -fsSL git.io/warp.sh) 4
+
+    # 重启 V2Ray
+    echo
+    echo -e "$yellow重启 V2Ray$none"
+    echo "----------------------------------------------------------------"
+    service v2ray restart
+
+    # 重启 CaddyV2
+    echo
+    echo -e "$yellow重启 CaddyV2$none"
+    echo "----------------------------------------------------------------"
+    service caddy reload
+fi
 
 echo
 echo
