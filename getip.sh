@@ -1,3 +1,6 @@
+
+# from https://github.com/wangxiaoke123/233v2ray
+
 get_ip() {
 
 	ipv4=$(curl -4 -s ipv4.icanhazip.com)
@@ -23,4 +26,5 @@ get_ip() {
 	fi
 }
 
-# from https://github.com/wangxiaoke123/233v2ray
+# from https://owo.misaka.rest/xui-routing/
+curl ipget.net
