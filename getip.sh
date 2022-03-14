@@ -1,8 +1,8 @@
+# 本脚本使用
+ip=$(curl -s https://api.myip.la)
 
 # from https://github.com/wangxiaoke123/233v2ray
-
 get_ip() {
-
 	ipv4=$(curl -4 -s ipv4.icanhazip.com)
 	[[ -z $ipv4 ]] && ipv4=$(curl -s -4 https://api.ip.sb/ip)
 	[[ -z $ipv4 ]] && ipv4=$(curl -s -4 https://api.ipify.org)
@@ -28,3 +28,4 @@ get_ip() {
 
 # from https://owo.misaka.rest/xui-routing/
 curl ipget.net
+
