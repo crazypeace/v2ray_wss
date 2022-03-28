@@ -127,7 +127,16 @@ while :; do
     break
 done
 
-ip=$(curl -s https://api.myip.la)
+echo -e "如果你的小鸡是${magenta}双栈(同时有IPv4和IPv6的IP)${none}，请选择你把v2ray搭在哪个'网口'上"
+echo "如果你不懂这段话是什么意思, 请直接回车"
+read -p "$(echo -e "Input ${cyan}4${none} for IPv4, ${cyan}6${none} for IPv6:") " netstack
+if [[ $netstack = "4" ]]; then
+    ip=$(curl -4 -s https://api.myip.la)
+elif [[ $netstack = "6" ]]; then 
+    ip=$(curl -6 -s https://api.myip.la)
+else
+    ip=$(curl -s https://api.myip.la)
+fi                
 
 echo
 echo
