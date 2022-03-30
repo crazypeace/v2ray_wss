@@ -118,7 +118,7 @@ done
 while :; do
     echo
     echo -e "请输入一个 ${magenta}正确的域名${none}, 一定一定一定要正确, 不! 能! 出! 错! "
-    read -p "(例如: 233blog.com): " domain
+    read -p "(例如: zelikk.blogspot.com): " domain
     [ -z "$domain" ] && error && continue
     echo
     echo
@@ -142,14 +142,14 @@ echo
 echo
 echo -e "$yellow 请将 $magenta$domain$none $yellow 解析到: $cyan$ip$none"
 echo
-echo -e "$yellow 请将 $magenta$domain$none $yellow 解析到: $cyan$ip$none"
+echo -e "$yellow Resolve $magenta$domain$none $yellow to: $cyan$ip$none"
 echo
 echo -e "$yellow 请将 $magenta$domain$none $yellow 解析到: $cyan$ip$none"
 echo "----------------------------------------------------------------"
 echo
 
 while :; do
-    read -p "$(echo -e "(是否已经正确解析: [${magenta}Y$none]):") " record
+    read -p "$(echo -e "(是否已经正确解析: [${magenta}Y$none]):") Is resolution correct?" record
     if [[ -z "$record" ]]; then
         error
     else
@@ -188,7 +188,7 @@ done
 # 分流path
 default_path=$(echo $uuid | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
 while :; do
-    echo -e "请输入想要 ${magenta} 用来分流的路径 $none , 例如 /233blog , 那么只需要输入 233blog 即可"
+    echo -e "请输入想要 ${magenta} 用来分流的路径 $none , 例如 /v2raypath , 那么只需要输入 v2raypath 即可"
     read -p "$(echo -e "(默认: [${cyan}${default_path}$none]):")" path
     [[ -z $path ]] && path=$default_path
 
