@@ -23,6 +23,7 @@ pause() {
 echo
 echo -e "$yellow此脚本仅兼容于Debian 10+系统. 如果你的系统不符合,请Ctrl+C退出脚本$none"
 echo -e "可以去 ${cyan}https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2${none} 查看脚本整体思路和关键命令, 以便针对你自己的系统做出调整."
+echo -e "有问题加群 ${cyan}https://t.me/+-wsJtBhlbQ8zMzRl{none}"
 echo "----------------------------------------------------------------"
 pause
 
@@ -117,8 +118,8 @@ done
 # 域名
 while :; do
     echo
-    echo -e "请输入一个 ${magenta}正确的域名${none}, 一定一定一定要正确, 不! 能! 出! 错! "
-    read -p "(例如: zelikk.blogspot.com): " domain
+    echo -e "请输入一个 ${magenta}正确的域名${none} Input your domain"
+    read -p "(例如: mydomain.com): " domain
     [ -z "$domain" ] && error && continue
     echo
     echo
