@@ -404,6 +404,11 @@ if [[ "$network_stack" == "ipv6" ]]; then
     echo -e "$yellow这是一个 IPv6 小鸡，用 WARP 创建 IPv4$none"
     echo "----------------------------------------------------------------"
     pause
+
+    # 添加 NAT64
+    echo -e "nameserver 2001:67c:2b0::4\nnameserver 2001:67c:2b0::6" > /etc/resolv.conf
+
+    # 安装 WARP IPv4
     bash <(curl -fsSL git.io/warp.sh) 4
 
     # 重启 V2Ray
