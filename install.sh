@@ -407,9 +407,6 @@ if [[ "$network_stack" == "ipv6" ]]; then
     echo "----------------------------------------------------------------"
     pause
 
-    # 添加 NAT64
-    echo -e "nameserver 2001:67c:2b0::4\nnameserver 2001:67c:2b0::6" > /etc/resolv.conf
-
     # 安装 WARP IPv4
     bash <(curl -fsSL git.io/warp.sh) 4
 
