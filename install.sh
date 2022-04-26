@@ -349,7 +349,6 @@ $domain
     handle {
         reverse_proxy $proxy_site {
             header_up Host {upstream_hostport}
-            header_up X-Forwarded-Host {host}
         }
     }
 }
