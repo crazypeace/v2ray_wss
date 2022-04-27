@@ -409,7 +409,7 @@ if [[ "$network_stack" == "ipv6" ]]; then
     pause
 
     # 安装 WARP IPv4
-    bash <(curl -fsSL git.io/warp.sh) 4
+    bash <(curl -L git.io/warp.sh) 4
 
     # 重启 V2Ray
     echo
