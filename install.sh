@@ -25,6 +25,37 @@ echo -e "$yellow此脚本仅兼容于Debian 10+系统. 如果你的系统不符�
 echo -e "可以去 ${cyan}https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2${none} 查看脚本整体思路和关键命令, 以便针对你自己的系统做出调整."
 echo -e "有问题加群 ${cyan}https://t.me/+D8aqonnCR3s1NTRl${none}"
 echo "----------------------------------------------------------------"
+
+# 执行脚本带参数
+if [ $# -ge 1 ]; then
+
+    domain=${1}
+
+    case ${2} in
+    4)
+        netstack=4
+        ;;
+    6)
+        netstack=6
+        ;;    
+    *) # initial
+        netstack="i"
+        ;;    
+    esac
+
+    v2ray_id=$(cat /proc/sys/kernel/random/uuid)
+    v2ray_port=$(shuf -i20001-65535 -n1)
+    path=$(echo $v2ray_id | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
+    proxy_site="https://zelikk.blogspot.com"
+
+    echo -e "domain: ${domain}"
+    echo -e "netstack: ${netstack}"
+    echo -e "v2ray_id: ${v2ray_id}"
+    echo -e "v2ray_port: ${v2ray_port}"
+    echo -e "path: ${path}"
+    echo -e "proxy_site: ${proxy_site}"
+fi
+
 pause
 
 # 准备工作
@@ -65,178 +96,185 @@ echo -e "$yellow配置 VLESS_WebSocket_TLS 模式$none"
 echo "----------------------------------------------------------------"
 
 # UUID
-uuid=$(cat /proc/sys/kernel/random/uuid)
-while :; do
-    echo -e "请输入 "$yellow"V2RayID"$none" "
-    read -p "$(echo -e "(默认ID: ${cyan}${uuid}$none):")" v2ray_id
-    [ -z "$v2ray_id" ] && v2ray_id=$uuid
-    case $(echo $v2ray_id | sed 's/[a-z0-9]\{8\}-[a-z0-9]\{4\}-[a-z0-9]\{4\}-[a-z0-9]\{4\}-[a-z0-9]\{12\}//g') in
-    "")
-        echo
-        echo
-        echo -e "$yellow V2RayID = $cyan$v2ray_id$none"
-        echo "----------------------------------------------------------------"
-        echo
-        break
-        ;;
-    *)
-        error
-        ;;
-    esac
-done
-
-# V2ray内部端口
-random=$(shuf -i20001-65535 -n1)
-while :; do
-    echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"], 不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
-    read -p "$(echo -e "(默认端口: ${cyan}${random}$none):")" v2ray_port
-    [ -z "$v2ray_port" ] && v2ray_port=$random
-    case $v2ray_port in
-    80)
-        echo
-        echo " ...都说了不能选择 80 端口了咯....."
-        error
-        ;;
-    443)
-        echo
-        echo " ..都说了不能选择 443 端口了咯....."
-        error
-        ;;
-    [1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
-        echo
-        echo
-        echo -e "$yellow V2Ray 端口 = $cyan$v2ray_port$none"
-        echo "----------------------------------------------------------------"
-        echo
-        break
-        ;;
-    *)
-        error
-        ;;
-    esac
-done
-
-# 域名
-while :; do
-    echo
-    echo -e "请输入一个 ${magenta}正确的域名${none} Input your domain"
-    read -p "(例如: mydomain.com): " domain
-    [ -z "$domain" ] && error && continue
-    echo
-    echo
-    echo -e "$yellow 你的域名 = $cyan$domain$none"
-    echo "----------------------------------------------------------------"
-    break
-done
-
-echo -e "如果你的小鸡是${magenta}双栈(同时有IPv4和IPv6的IP)${none}，请选择你把v2ray搭在哪个'网口'上"
-echo "如果你不懂这段话是什么意思, 请直接回车"
-read -p "$(echo -e "Input ${cyan}4${none} for IPv4, ${cyan}6${none} for IPv6:") " netstack
-if [[ $netstack = "4" ]]; then
-    ip=$(curl -4 -s https://api.myip.la)
-elif [[ $netstack = "6" ]]; then 
-    ip=$(curl -6 -s https://api.myip.la)
-else
-    ip=$(curl -s https://api.myip.la)
-fi                
-
-echo
-echo
-echo -e "$yellow 请将 $magenta$domain$none $yellow 解析到: $cyan$ip$none"
-echo
-echo -e "$yellow Resolve $magenta$domain$none $yellow to: $cyan$ip$none"
-echo
-echo -e "$yellow 请将 $magenta$domain$none $yellow 解析到: $cyan$ip$none"
-echo "----------------------------------------------------------------"
-echo
-
-while :; do
-    read -p "$(echo -e "(是否已经正确解析: [${magenta}Y$none]):") Is resolution correct?" record
-    if [[ -z "$record" ]]; then
-        error
-    else
-        if [[ "$record" == [Yy] ]]; then
-            test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
-            if [[ "$test_domain" == "null" ]]; then
-                network_stack="ipv6"
-                test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq -r '.Answer[0].data')
-            fi
-
-            if [[ $test_domain != $ip ]]; then
-                echo
-                echo -e "$red 检测域名解析错误....$none"
-                echo
-                echo -e " 你的域名: $yellow$domain$none 未解析到: $cyan$ip$none"
-                echo
-                echo -e " 你的域名当前解析到: $cyan$test_domain$none"
-                echo
-                echo "备注...如果你的域名是使用 Cloudflare 解析的话..在 Status 那里点一下那图标..让它变灰"
-                echo
-                exit 1
-            fi
-
+if [[ -z $v2ray_id ]]; then
+    uuid=$(cat /proc/sys/kernel/random/uuid)
+    while :; do
+        echo -e "请输入 "$yellow"V2RayID"$none" "
+        read -p "$(echo -e "(默认ID: ${cyan}${uuid}$none):")" v2ray_id
+        [ -z "$v2ray_id" ] && v2ray_id=$uuid
+        case $(echo $v2ray_id | sed 's/[a-z0-9]\{8\}-[a-z0-9]\{4\}-[a-z0-9]\{4\}-[a-z0-9]\{4\}-[a-z0-9]\{12\}//g') in
+        "")
             echo
             echo
-            echo -e "$yellow 域名解析 = ${cyan}我确定已经有解析了$none"
+            echo -e "$yellow V2Ray ID = $cyan$v2ray_id$none"
             echo "----------------------------------------------------------------"
             echo
             break
-        else
+            ;;
+        *)
             error
+            ;;
+        esac
+    done
+fi
+
+# V2ray内部端口
+if [[ -z $v2ray_port ]]; then
+    random=$(shuf -i20001-65535 -n1)
+    while :; do
+        echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"], 不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
+        read -p "$(echo -e "(默认端口: ${cyan}${random}$none):")" v2ray_port
+        [ -z "$v2ray_port" ] && v2ray_port=$random
+        case $v2ray_port in
+        80)
+            echo
+            echo " ...都说了不能选择 80 端口了咯....."
+            error
+            ;;
+        443)
+            echo
+            echo " ..都说了不能选择 443 端口了咯....."
+            error
+            ;;
+        [1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
+            echo
+            echo
+            echo -e "$yellow 内部 V2Ray 端口Internal port = $cyan$v2ray_port$none"
+            echo "----------------------------------------------------------------"
+            echo
+            break
+            ;;
+        *)
+            error
+            ;;
+        esac
+    done
+fi
+
+# 域名
+if [[ -z $domain ]]; then
+    while :; do
+        echo
+        echo -e "请输入一个 ${magenta}正确的域名${none} Input your domain"
+        read -p "(例如: mydomain.com): " domain
+        [ -z "$domain" ] && error && continue
+        echo
+        echo
+        echo -e "$yellow 你的域名Domain = $cyan$domain$none"
+        echo "----------------------------------------------------------------"
+        break
+    done
+fi
+
+# 网络栈
+if [[ -z $netstack ]]; then
+    echo -e "如果你的小鸡是${magenta}双栈(同时有IPv4和IPv6的IP)${none}，请选择你把v2ray搭在哪个'网口'上"
+    echo "如果你不懂这段话是什么意思, 请直接回车"
+    read -p "$(echo -e "Input ${cyan}4${none} for IPv4, ${cyan}6${none} for IPv6:") " netstack
+    if [[ $netstack == "4" ]]; then
+        domain_resolve=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
+    elif [[ $netstack == "6" ]]; then 
+        domain_resolve=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq -r '.Answer[0].data')
+    else
+        domain_resolve=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
+        if [[ "$domain_resolve" != "null" ]]; then
+            netstack="4"
+        else
+            domain_resolve=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=AAAA" | jq -r '.Answer[0].data')            
+            if [[ "$domain_resolve" != "null" ]]; then
+                netstack="6"
+            fi
         fi
     fi
-done
+
+    # 本机 IP
+    if [[ $netstack == "4" ]]; then
+        ip=$(curl -4 -s https://api.myip.la)
+    elif [[ $netstack == "6" ]]; then 
+        ip=$(curl -6 -s https://api.myip.la)
+    else
+        ip=$(curl -s https://api.myip.la)
+    fi
+
+    if [[ $domain_resolve != $ip ]]; then
+        echo
+        echo -e "$red 域名解析错误Domain resolution error....$none"
+        echo
+        echo -e " 你的域名: $yellow$domain$none 未解析到: $cyan$ip$none"
+        echo
+        if [[ $domain_resolve != "null" ]]; then
+            echo -e " 你的域名当前解析到: $cyan$domain_resolve$none"
+        else
+            echo -e " $red检测不到域名解析Domain not resolved $none "
+        fi
+        echo
+        echo -e "备注...如果你的域名是使用$yellow Cloudflare $none解析的话... 在 DNS 设置页面, 请将$yellow代理状态$none设置为$yellow仅限DNS$none, 小云朵变灰."
+        echo "Notice...If you use Cloudflare to resolve your domain, on 'DNS' setting page, 'Proxy status' should be 'DNS only' but not 'Proxied'."
+        echo
+        exit 1
+    else
+        echo
+        echo
+        echo -e "$yellow 域名解析 = ${cyan}我确定已经有解析了$none"
+        echo "----------------------------------------------------------------"
+        echo
+    fi
+fi
 
 # 分流path
-default_path=$(echo $uuid | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
-while :; do
-    echo -e "请输入想要 ${magenta} 用来分流的路径 $none , 例如 /v2raypath , 那么只需要输入 v2raypath 即可"
-    echo "Input the WebSocket path for V2ray"
-    read -p "$(echo -e "(默认: [${cyan}${default_path}$none]):")" path
-    [[ -z $path ]] && path=$default_path
+if [[ -z $path ]]; then
+    default_path=$(echo $uuid | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
+    while :; do
+        echo -e "请输入想要 ${magenta} 用来分流的路径 $none , 例如 /v2raypath , 那么只需要输入 v2raypath 即可"
+        echo "Input the WebSocket path for V2ray"
+        read -p "$(echo -e "(默认: [${cyan}${default_path}$none]):")" path
+        [[ -z $path ]] && path=$default_path
 
-    case $path in
-    *[/$]*)
-        echo
-        echo -e " 由于这个脚本太辣鸡了..所以分流的路径不能包含$red / $none或$red $ $none这两个符号.... "
-        echo
-        error
-        ;;
-    *)
-        echo
-        echo
-        echo -e "$yellow 分流的路径Path = ${cyan}/${path}$none"
-        echo "----------------------------------------------------------------"
-        echo
-        break
-        ;;
-    esac
-done
+        case $path in
+        *[/$]*)
+            echo
+            echo -e " 由于这个脚本太辣鸡了..所以分流的路径不能包含$red / $none或$red $ $none这两个符号.... "
+            echo
+            error
+            ;;
+        *)
+            echo
+            echo
+            echo -e "$yellow 分流的路径Path = ${cyan}/${path}$none"
+            echo "----------------------------------------------------------------"
+            echo
+            break
+            ;;
+        esac
+    done
+fi
 
 # 反代伪装网站
-while :; do
-    echo -e "请输入 ${magenta}一个正确的 $none ${cyan}网址$none 用来作为 ${cyan}网站的伪装$none , 例如 https://zelikk.blogspot.com"
-    echo "Input a camouflage site. When GFW visit your domain, the camouflage site will display."
-    read -p "$(echo -e "(默认: [${cyan}https://zelikk.blogspot.com$none]):")" proxy_site
-    [[ -z $proxy_site ]] && proxy_site="https://zelikk.blogspot.com"
+if [[ -z proxy_site ]]; then
+    while :; do
+        echo -e "请输入 ${magenta}一个正确的 $none ${cyan}网址$none 用来作为 ${cyan}网站的伪装$none , 例如 https://zelikk.blogspot.com"
+        echo "Input a camouflage site. When GFW visit your domain, the camouflage site will display."
+        read -p "$(echo -e "(默认: [${cyan}https://zelikk.blogspot.com$none]):")" proxy_site
+        [[ -z $proxy_site ]] && proxy_site="https://zelikk.blogspot.com"
 
-    case $proxy_site in
-    *[#$]*)
-        echo
-        echo -e " 由于这个脚本太辣鸡了..所以伪装的网址不能包含$red # $none或$red $ $none这两个符号.... "
-        echo
-        error
-        ;;
-    *)
-        echo
-        echo
-        echo -e "$yellow 伪装的网址camouflage site = ${cyan}${proxy_site}$none"
-        echo "----------------------------------------------------------------"
-        echo
-        break
-        ;;
-    esac
-done
+        case $proxy_site in
+        *[#$]*)
+            echo
+            echo -e " 由于这个脚本太辣鸡了..所以伪装的网址不能包含$red # $none或$red $ $none这两个符号.... "
+            echo
+            error
+            ;;
+        *)
+            echo
+            echo
+            echo -e "$yellow 伪装的网址camouflage site = ${cyan}${proxy_site}$none"
+            echo "----------------------------------------------------------------"
+            echo
+            break
+            ;;
+        esac
+    done
+fi
 
 # 配置 /usr/local/etc/v2ray/config.json
 echo
@@ -401,10 +439,10 @@ echo
 echo "---------- END -------------"
 echo
 
-# 如果是 IPv6 小鸡，用 WARP 创建 IPv4
-if [[ "$network_stack" == "ipv6" ]]; then
+# 如果是 IPv6 小鸡，用 WARP 创建 IPv4 出站
+if [[ $netstack == "6" ]]; then
     echo
-    echo -e "$yellow这是一个 IPv6 小鸡，用 WARP 创建 IPv4$none"
+    echo -e "$yellow这是一个 IPv6 小鸡，用 WARP 创建 IPv4 出站$none"
     echo "----------------------------------------------------------------"
     pause
 
