@@ -322,6 +322,7 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
             },
             "tag": "direct"
         },
+        // [outbound]
         {
             "protocol": "blackhole",
             "settings": {},
@@ -360,6 +361,7 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
                 ],
                 "outboundTag": "blocked"
             },
+            // [routing-rule]
             {
                 "type": "field",
                 "protocol": [
