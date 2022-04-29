@@ -161,6 +161,19 @@ apt remove -y caddy
 # 后记
 对于喜欢V2rayN PAC模式的朋友，实测客户端可以用 V2rayN v3.29 + V2ray-core V4.44.0
 
+# 带参数执行
+如果你已经很熟悉了, 安装过程中的参数都确认没问题. 可以带参数使用本脚本.
+```
+bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) <domain> [netstack]
+domain      你的域名
+netstask    6 IPv6入站, 最后会安装WARP获得IPv4出站
+```
+例如
+```
+bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) abc.mydomain.com
+bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) abccba.ipv6d.my.id 6
+```
+
 ## 用你的STAR告诉我这个Repo对你有用 Welcome STARs! :)
 
 [![Stargazers over time](https://starchart.cc/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2.svg)](https://starchart.cc/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2)
