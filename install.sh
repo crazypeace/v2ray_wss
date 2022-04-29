@@ -250,7 +250,7 @@ if [[ -z $path ]]; then
 fi
 
 # 反代伪装网站
-if [[ -z proxy_site ]]; then
+if [[ -z $proxy_site ]]; then
     while :; do
         echo -e "请输入 ${magenta}一个正确的 $none ${cyan}网址$none 用来作为 ${cyan}网站的伪装$none , 例如 https://zelikk.blogspot.com"
         echo "Input a camouflage site. When GFW visit your domain, the camouflage site will display."
