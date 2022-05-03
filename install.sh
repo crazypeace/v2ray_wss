@@ -323,6 +323,20 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
             "tag": "direct"
         },
         // [outbound]
+{
+    "protocol": "freedom",
+    "settings": {
+        "domainStrategy": "UseIPv4"
+    },
+    "tag": "force-ipv4"
+},
+{
+    "protocol": "freedom",
+    "settings": {
+        "domainStrategy": "UseIPv6"
+    },
+    "tag": "force-ipv6"
+},        
         {
             "protocol": "blackhole",
             "settings": {},
@@ -362,6 +376,11 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
                 "outboundTag": "blocked"
             },
             // [routing-rule]
+// {
+//      "type": "field",
+//      "outboundTag": "force-ipv6",  // 指定走IPv4或IPv6有时能解决Google的人机验证问题
+//      "domain": ["geosite:google"] 
+// },             
             {
                 "type": "field",
                 "protocol": [
