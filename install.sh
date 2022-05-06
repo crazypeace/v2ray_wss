@@ -378,7 +378,7 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
             // [routing-rule]
 // {
 //      "type": "field",
-//      "outboundTag": "force-ipv6",  // 指定走IPv4或IPv6有时能解决Google的人机验证问题
+//      "outboundTag": "force-ipv6",  // ***
 //      "domain": ["geosite:google"] 
 // },             
             {
