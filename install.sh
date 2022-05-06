@@ -223,7 +223,7 @@ fi
 
 # 分流path
 if [[ -z $path ]]; then
-    default_path=$(echo $uuid | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
+    default_path=$(echo $v2ray_id | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
     while :; do
         echo -e "请输入想要 ${magenta} 用来分流的路径 $none , 例如 /v2raypath , 那么只需要输入 v2raypath 即可"
         echo "Input the WebSocket path for V2ray"
