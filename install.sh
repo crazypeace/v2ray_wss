@@ -336,7 +336,17 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
         "domainStrategy": "UseIPv6"
     },
     "tag": "force-ipv6"
-},        
+},
+// {
+//     "protocol": "socks",
+//     "settings": {
+//         "servers": [{
+//             "address": "127.0.0.1",
+//             "port": 40000 //warp socks5 port
+//         }]
+//     },
+//     "tag": "socks5-warp"
+// },
         {
             "protocol": "blackhole",
             "settings": {},
@@ -378,9 +388,9 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
             // [routing-rule]
 // {
 //      "type": "field",
-//      "outboundTag": "force-ipv6",  // ***
-//      "domain": ["geosite:google"] 
-// },             
+//      "outboundTag": "force-ipv6",  // force-ipv4 // socks5-warp
+//      "domain": ["geosite:google"]  // ***
+// },
             {
                 "type": "field",
                 "protocol": [
