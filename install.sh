@@ -67,6 +67,7 @@ echo
 echo -e "$yellow安装V2ray最新版本$none"
 echo "----------------------------------------------------------------"
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+systemctl enable v2ray
 
 # 安装Caddy最新版本
 echo
