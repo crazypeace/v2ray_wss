@@ -68,16 +68,15 @@ echo -e "$yellow安装V2ray最新版本$none"
 echo "----------------------------------------------------------------"
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 
-# 安装Caddy V2.4.6
-# 最新的 Caddy V2.5.0 在 reverse_proxy 里引入了一个 trusted_proxies 先用老版本顶一段时间
+# 安装Caddy最新版本
 echo
-echo -e "$yellow安装Caddy V2.4.6$none"
+echo -e "$yellow安装Caddy最新版本$none"
 echo "----------------------------------------------------------------"
 sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo apt-key add -
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
 sudo apt update
-sudo apt install -y caddy=2.4.6
+sudo apt install -y caddy
 
 # 打开BBR
 echo
@@ -418,8 +417,8 @@ $domain
     }
     handle {
         reverse_proxy $proxy_site {
+            trusted_proxies 0.0.0.0/0
             header_up Host {upstream_hostport}
-            header_up X-Forwarded-Host {host}
         }
     }
 }
