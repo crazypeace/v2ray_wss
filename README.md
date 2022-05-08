@@ -139,8 +139,8 @@ sudo apt install caddy
     }
     handle {
         reverse_proxy https://你反代伪装的网站 {     # 改这里
+            trusted_proxies 0.0.0.0/0
             header_up Host {upstream_hostport}
-            header_up X-Forwarded-Host {host}
         }
     }
 }
