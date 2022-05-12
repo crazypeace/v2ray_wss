@@ -148,7 +148,7 @@ sudo apt install caddy
 
 # 如果是 IPv6 only 的小鸡，用 WARP 添加 IPv4 能力
 ```
-bash <(curl -fsSL git.io/warp.sh) 4
+bash <(curl -L git.io/warp.sh) 4
 ```
 
 # Uninstall
