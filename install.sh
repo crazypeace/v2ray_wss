@@ -67,6 +67,7 @@ echo
 echo -e "$yellow安装V2ray最新版本$none"
 echo "----------------------------------------------------------------"
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+
 systemctl enable v2ray
 
 # 安装Caddy最新版本
@@ -78,6 +79,8 @@ curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo apt-key
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
 sudo apt update
 sudo apt install -y caddy
+
+systemctl enable caddy
 
 # 打开BBR
 echo
