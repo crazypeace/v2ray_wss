@@ -126,7 +126,7 @@ if [[ -z $v2ray_port ]]; then
     random=$(shuf -i20001-65535 -n1)
     while :; do
         echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"], 不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
-        read -p "$(echo -e "(默认端口: ${cyan}${random}$none):")" v2ray_port
+        read -p "$(echo -e "(默认端口port: ${cyan}${random}$none):")" v2ray_port
         [ -z "$v2ray_port" ] && v2ray_port=$random
         case $v2ray_port in
         80)
@@ -230,7 +230,7 @@ if [[ -z $path ]]; then
     while :; do
         echo -e "请输入想要 ${magenta} 用来分流的路径 $none , 例如 /v2raypath , 那么只需要输入 v2raypath 即可"
         echo "Input the WebSocket path for V2ray"
-        read -p "$(echo -e "(默认: [${cyan}${default_path}$none]):")" path
+        read -p "$(echo -e "(默认path: [${cyan}${default_path}$none]):")" path
         [[ -z $path ]] && path=$default_path
 
         case $path in
@@ -257,7 +257,7 @@ if [[ -z $proxy_site ]]; then
     while :; do
         echo -e "请输入 ${magenta}一个正确的 $none ${cyan}网址$none 用来作为 ${cyan}网站的伪装$none , 例如 https://zelikk.blogspot.com"
         echo "Input a camouflage site. When GFW visit your domain, the camouflage site will display."
-        read -p "$(echo -e "(默认: [${cyan}https://zelikk.blogspot.com$none]):")" proxy_site
+        read -p "$(echo -e "(默认site: [${cyan}https://zelikk.blogspot.com$none]):")" proxy_site
         [[ -z $proxy_site ]] && proxy_site="https://zelikk.blogspot.com"
 
         case $proxy_site in
