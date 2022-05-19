@@ -60,7 +60,7 @@ pause
 
 # 准备工作
 apt update
-apt install -y bash curl sudo jq
+apt install -y curl sudo jq
 
 # 安装V2ray最新版本
 echo
@@ -75,10 +75,10 @@ echo
 echo -e "$yellow安装Caddy最新版本$none"
 echo "----------------------------------------------------------------"
 sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo apt-key add -
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
 sudo apt update
-sudo apt install -y caddy
+sudo apt install caddy
 
 systemctl enable caddy
 
