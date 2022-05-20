@@ -38,6 +38,12 @@ sudo apt update
 sudo apt install caddy
 ```
 
+如果已经装过了Caddy, 重装的时候脚本会问你
+```
+File '/usr/share/keyrings/caddy-stable-archive-keyring.gpg' exists. Overwrite? (y/N)
+```
+输入 y 回车。
+
 # 配置 /usr/local/etc/v2ray/config.json
 ```
 { // VLESS + WebSocket + TLS
