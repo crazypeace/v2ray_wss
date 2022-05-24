@@ -478,6 +478,7 @@ echo
 if [[ $netstack == "6" ]]; then
     echo
     echo -e "$yellow这是一个 IPv6 小鸡，用 WARP 创建 IPv4 出站$none"
+    echo "Telegram电报是直接访问IPv4地址的, 需要IPv4出站的能力"
     echo "----------------------------------------------------------------"
     pause
 
@@ -495,5 +496,31 @@ if [[ $netstack == "6" ]]; then
     echo -e "$yellow重启 CaddyV2$none"
     echo "----------------------------------------------------------------"
     service caddy restart
+
+# 如果是 IPv4 小鸡，用 WARP 创建 IPv6 出站
+elif  [[ $netstack == "4" ]]; then
+    echo
+    echo -e "$yellow这是一个 IPv4 小鸡，用 WARP 创建 IPv6 出站$none"
+    echo "有些热门小鸡用原生的IPv4出站访问Google需要通过人机验证, 可以通过修改config.json指定google流量走WARP的IPv6出站解决"
+    echo "群组: ${cyan} https://t.me/+D8aqonnCR3s1NTRl ${none}"
+    echo "教程: ${cyan} https://zelikk.blogspot.com/2022/03/racknerd-v2ray-cloudflare-warp--ipv6-google-domainstrategy-outboundtag-routing.html ${none}"
+    echo "----------------------------------------------------------------"
+    pause
+
+    # 安装 WARP IPv6
+    bash <(curl -L git.io/warp.sh) 6
+
+    # 重启 V2Ray
+    echo
+    echo -e "$yellow重启 V2Ray$none"
+    echo "----------------------------------------------------------------"
+    service v2ray restart
+
+    # 重启 CaddyV2
+    echo
+    echo -e "$yellow重启 CaddyV2$none"
+    echo "----------------------------------------------------------------"
+    service caddy restart
+
 fi
 
