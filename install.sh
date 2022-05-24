@@ -501,9 +501,10 @@ if [[ $netstack == "6" ]]; then
 elif  [[ $netstack == "4" ]]; then
     echo
     echo -e "$yellow这是一个 IPv4 小鸡，用 WARP 创建 IPv6 出站$none"
-    echo "有些热门小鸡用原生的IPv4出站访问Google需要通过人机验证, 可以通过修改config.json指定google流量走WARP的IPv6出站解决"
-    echo "群组: ${cyan} https://t.me/+D8aqonnCR3s1NTRl ${none}"
-    echo "教程: ${cyan} https://zelikk.blogspot.com/2022/03/racknerd-v2ray-cloudflare-warp--ipv6-google-domainstrategy-outboundtag-routing.html ${none}"
+    echo -e "有些热门小鸡用原生的IPv4出站访问Google需要通过人机验证, 可以通过修改config.json指定google流量走WARP的IPv6出站解决"
+    echo -e "群组: ${cyan} https://t.me/+D8aqonnCR3s1NTRl ${none}"
+    echo -e "教程: ${cyan} https://zelikk.blogspot.com/2022/03/racknerd-v2ray-cloudflare-warp--ipv6-google-domainstrategy-outboundtag-routing.html ${none}"
+    echo -e "视频: ${cyan} https://youtu.be/Yvvm4IlouEk ${none}"
     echo "----------------------------------------------------------------"
     pause
 
