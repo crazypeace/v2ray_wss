@@ -156,7 +156,7 @@ File '/usr/share/keyrings/caddy-stable-archive-keyring.gpg' exists. Overwrite? (
 }
 ```
 
-# 如果是 IPv6 only 的小鸡，用 WARP 添加 IPv4 能力
+# 如果是 IPv6 only 的小鸡，用 WARP 添加 IPv4 出站能力
 ```
 bash <(curl -L git.io/warp.sh) 4
 ```
@@ -175,9 +175,13 @@ apt remove -y caddy
 如果你已经很熟悉了, 安装过程中的参数都确认没问题. 可以带参数使用本脚本, 跳过脚本中的各种校验.
 ```
 bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) <domain> [netstack]
-domain      你的域名
-netstask    6 IPv6入站, 最后会安装WARP获得IPv4出站
 ```
+其中
+
+`domain`      你的域名
+
+`netstask`    6 表示 IPv6入站, 最后会安装WARP获得IPv4出站
+
 例如
 ```
 bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) abc.mydomain.com
