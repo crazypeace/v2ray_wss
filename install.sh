@@ -417,6 +417,9 @@ $domain
     tls Y3JhenlwZWFjZQ@gmail.com
     encode gzip
 
+#    多用户 多path
+#    import Caddyfile.multiuser
+
     handle_path /$path {
         reverse_proxy localhost:$v2ray_port
     }
@@ -426,6 +429,28 @@ $domain
             header_up Host {upstream_hostport}
         }
     }
+}
+EOF
+
+# 多用户 多path
+multiuser_path=""
+user_number=10
+while [ $user_number -gt 0 ]; do
+    random_path=$(cat /proc/sys/kernel/random/uuid | sed 's/.*\([a-z0-9]\{4\}-[a-z0-9]\{12\}\)$/\1/g')
+
+    multiuser_path=${multiuser_path}"path /"${random_path}$'\n'
+
+    user_number=$(($user_number - 1))
+done
+
+cat >/etc/caddy/Caddyfile.multiuser <<-EOF
+@ws_path {
+$multiuser_path
+}
+
+handle @ws_path {
+    uri path_regexp /.* /
+    reverse_proxy localhost:$v2ray_port
 }
 EOF
 
