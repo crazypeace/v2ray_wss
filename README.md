@@ -156,6 +156,32 @@ File '/usr/share/keyrings/caddy-stable-archive-keyring.gpg' exists. Overwrite? (
 }
 ```
 
+如果想多用户使用，可以通过多path的方式
+```
+你的域名     # 改这里
+{
+    tls Y3JhenlwZWFjZQ@gmail.com
+    encode gzip
+
+@ws_path {
+    path /分流path1     # 改这里
+    path /分流path2     # 改这里
+    path /分流path3     # 改这里
+}
+
+    handle @ws_path {
+        uri path_regexp /.* /
+        reverse_proxy localhost:你的v2ray内部端口     # 改这里
+    }
+    handle {
+        reverse_proxy https://你反代伪装的网站 {     # 改这里
+            trusted_proxies 0.0.0.0/0
+            header_up Host {upstream_hostport}
+        }
+    }
+}
+```
+
 # 如果是 IPv6 only 的小鸡，用 WARP 添加 IPv4 出站能力
 ```
 bash <(curl -L git.io/warp.sh) 4
