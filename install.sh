@@ -61,7 +61,7 @@ pause
 
 # 准备工作
 apt update
-apt install -y curl sudo jq
+apt install -y curl sudo jq qrencode
 
 # 安装V2ray最新版本
 echo
@@ -493,9 +493,12 @@ echo
 echo -e "$yellow 底层传输安全 (TLS) = ${cyan}tls$none"
 echo
 echo "---------- V2Ray VLESS URL ----------"
-echo -e "${cyan}vless://${v2ray_id}@${domain}:443?encryption=none&security=tls&type=ws&host=${domain}&path=${path}#VLESS_WSS_${domain}${none}"
-echo "vless://${v2ray_id}@${domain}:443?encryption=none&security=tls&type=ws&host=${domain}&path=${path}#VLESS_WSS_${domain}" > ~/_v2ray_vless_url_
+v2ray_vless_url="vless://${v2ray_id}@${domain}:443?encryption=none&security=tls&type=ws&host=${domain}&path=${path}#VLESS_WSS_${domain}"
+echo -e "${cyan}${v2ray_vless_url}${none}"
+qrencode -t ANSI $v2ray_vless_url
 echo
+echo $v2ray_vless_url > ~/_v2ray_vless_url_
+qrencode -t ANSI $v2ray_vless_url >> ~/_v2ray_vless_url_
 echo "---------- END -------------"
 echo
 
