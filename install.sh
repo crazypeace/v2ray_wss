@@ -392,7 +392,7 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
             // [routing-rule]
 // {
 //      "type": "field",
-//      "outboundTag": "force-ipv6",  // force-ipv4 // socks5-warp
+//      "outboundTag": "force-ipv6",  // force-ipv6 // force-ipv4 // socks5-warp
 //      "domain": ["geosite:google"]  // ***
 // },
             {
