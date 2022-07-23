@@ -428,6 +428,7 @@ $domain
     }
     handle {
         reverse_proxy $proxy_site {
+            trusted_proxies 0.0.0.0/0
             header_up Host {upstream_hostport}
         }
     }
