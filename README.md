@@ -182,6 +182,7 @@ File '/usr/share/keyrings/caddy-stable-archive-keyring.gpg' exists. Overwrite? (
     }
 }
 ```
+可参考视频 https://www.youtube.com/watch?v=bfZh_eaYJLE&t=220s
 
 # 如果是 IPv6 only 的小鸡，用 WARP 添加 IPv4 出站能力
 ```
