@@ -33,8 +33,10 @@ echo "----------------------------------------------------------------"
 # 执行脚本带参数
 if [ $# -ge 1 ]; then
 
+    # 第1个参数是域名
     domain=${1}
 
+    # 第2个参数是搭在ipv4还是ipv6上
     case ${2} in
     4)
         netstack=4
@@ -47,9 +49,20 @@ if [ $# -ge 1 ]; then
         ;;    
     esac
 
-    v2ray_id=$(cat /proc/sys/kernel/random/uuid)
+    #第3个参数是UUID
+    v2ray_id=${3}
+    if [[ -z $v2ray_id ]]; then
+        v2ray_id=$(cat /proc/sys/kernel/random/uuid)
+    fi
+        
     v2ray_port=$(shuf -i20001-65535 -n1)
-    path=$(echo $v2ray_id | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
+
+    #第4个参数是path
+    path=${4}
+    if [[ -z $path ]]; then 
+        path=$(echo $v2ray_id | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
+    fi
+
     proxy_site="https://zelikk.blogspot.com"
 
     echo -e "domain: ${domain}"
