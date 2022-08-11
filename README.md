@@ -196,13 +196,14 @@ rm /etc/apt/sources.list.d/caddy-stable.list
 apt remove -y caddy
 ```
 
-# 后记
-对于喜欢V2rayN PAC模式的朋友，实测客户端可以用 V2rayN v3.29 + V2ray-core V4.44.0
+# 私货
+对于喜欢V2rayN PAC模式的朋友，欢迎使用支持VLESS链接导入功能的 [v2rayN-3.29-VLESS](https://github.com/crazypeace/v2rayN-3.29-VLESS)
+![v2rayN_2022-07-20_22-02-43](https://user-images.githubusercontent.com/665889/180002616-c2c6da3c-78b0-4f46-8fa9-34021590646f.png)
 
 # 带参数执行
 如果你已经很熟悉了, 安装过程中的参数都确认没问题. 可以带参数使用本脚本, 跳过脚本中的各种校验.
 ```
-bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) <domain> [netstack]
+bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) <domain> [netstack] [UUID] [path]
 ```
 其中
 
@@ -210,10 +211,16 @@ bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/r
 
 `netstask`    6 表示 IPv6入站, 最后会安装WARP获得IPv4出站
 
+`UUID` 你的UUID
+
+`path` 你的path，如果不输入，会从UUID自动生成
+
 例如
 ```
 bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) abc.mydomain.com
 bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) abccba.ipv6d.my.id 6
+bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) abccba.ipv6d.my.id 6 486572e1-11d5-4e93-a41d-d4b9775870bd
+bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) abccba.ipv6d.my.id 6 486572e1-11d5-4e93-a41d-d4b9775870bd somepath
 ```
 
 ## 用你的STAR告诉我这个Repo对你有用 Welcome STARs! :)
