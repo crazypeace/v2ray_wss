@@ -512,13 +512,13 @@ echo "---------- V2Ray VLESS URL ----------"
 v2ray_vless_url="vless://${v2ray_id}@${domain}:443?encryption=none&security=tls&type=ws&host=${domain}&path=${path}#VLESS_WSS_${domain}"
 echo -e "${cyan}${v2ray_vless_url}${none}"
 echo "以下两个二维码完全一样的内容"
-qrencode -t ANSI $v2ray_vless_url
 qrencode -t UTF8 $v2ray_vless_url
+qrencode -t ANSI $v2ray_vless_url
 echo
 echo $v2ray_vless_url > ~/_v2ray_vless_url_
 echo "以下两个二维码完全一样的内容" >> ~/_v2ray_vless_url_
-qrencode -t ANSI $v2ray_vless_url >> ~/_v2ray_vless_url_
 qrencode -t UTF8 $v2ray_vless_url >> ~/_v2ray_vless_url_
+qrencode -t ANSI $v2ray_vless_url >> ~/_v2ray_vless_url_
 echo "---------- END -------------"
 echo
 
