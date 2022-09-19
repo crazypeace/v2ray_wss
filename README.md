@@ -1,3 +1,12 @@
+# 2022-9-19 
+Hax / Woiden 站长时不时的把机器人验证调得很难，于是续期非常容易失败。
+那么把搭梯子的脚本简单化
+```
+apt update && apt install -y curl && bash <(curl -L https://github.com/crazypeace/V2ray_VLESS_WebSocket_TLS_CaddyV2/raw/main/install.sh) 你的域名 6 你的UUID 你的path
+```
+跑这条命令之前，把CDN关闭。跑完之后再把CDN打开。
+这样搭出来的梯子，你的翻墙客户端节点信息不用改。
+
 # 2022-9-8
 临时地，本脚本指定安装V2ray v4.45.2 (v5之前的最后一个v4)
 
