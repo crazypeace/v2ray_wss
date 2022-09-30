@@ -45,7 +45,7 @@ bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/
 ```
 
 # 安装CaddyV2最新版本
-source: https://caddyserver.com/docs/install#debian-ubuntu-raspbian=
+source: https://caddyserver.com/docs/install#debian-ubuntu-raspbian
 
 ```
 sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
