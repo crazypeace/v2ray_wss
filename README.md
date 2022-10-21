@@ -8,7 +8,7 @@ apt update && apt install -y curl && bash <(curl -L https://github.com/crazypeac
 这样搭出来的梯子，你的翻墙客户端节点信息不用改。
 
 # 2022-9-8
-临时地，本脚本指定安装V2ray v4.45.2 (v5之前的最后一个v4)
+本脚本指定安装V2ray v4.45.2 (v5之前的最后一个v4)
 
 相关信息
 https://github.com/v2fly/fhs-install-v2ray/issues/243
@@ -38,10 +38,10 @@ echo "net.core.default_qdisc = fq" >>/etc/sysctl.conf
 sysctl -p >/dev/null 2>&1
 ```
 
-# 安装V2ray最新版本
+# 安装V2ray v4.45.2
 source: https://github.com/v2fly/fhs-install-v2ray
 ```
-bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --version 4.45.2
 ```
 
 # 安装CaddyV2最新版本
