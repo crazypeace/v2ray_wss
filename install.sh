@@ -486,42 +486,35 @@ service caddy restart
 echo
 echo
 echo "---------- V2Ray 配置信息 -------------"
-echo
 echo -e "$green ---提示..这是 VLESS 服务器配置--- $none"
-echo
 echo -e "$yellow 地址 (Address) = $cyan${domain}$none"
-echo
 echo -e "$yellow 端口 (Port) = ${cyan}443${none}"
-echo
 echo -e "$yellow 用户ID (User ID / UUID) = $cyan${v2ray_id}$none"
-echo
 echo -e "$yellow 流控 (Flow) = ${cyan}空${none}"
-echo
 echo -e "$yellow 加密 (Encryption) = ${cyan}none${none}"
-echo
 echo -e "$yellow 传输协议 (Network) = ${cyan}ws$none"
-echo
 echo -e "$yellow 伪装类型 (header type) = ${cyan}none$none"
-echo
 echo -e "$yellow 伪装域名 (host) = ${cyan}${domain}$none"
-echo
 echo -e "$yellow 路径 (path) = ${cyan}/${path}$none"
-echo
 echo -e "$yellow 底层传输安全 (TLS) = ${cyan}tls$none"
 echo
 echo "---------- V2Ray VLESS URL ----------"
 v2ray_vless_url="vless://${v2ray_id}@${domain}:443?encryption=none&security=tls&type=ws&host=${domain}&path=${path}#VLESS_WSS_${domain}"
 echo -e "${cyan}${v2ray_vless_url}${none}"
+echo
+sleep 1
 echo "以下两个二维码完全一样的内容"
 qrencode -t UTF8 $v2ray_vless_url
 qrencode -t ANSI $v2ray_vless_url
 echo
+echo "---------- END -------------"
+echo
+
+# 节点信息保存到文件中
 echo $v2ray_vless_url > ~/_v2ray_vless_url_
 echo "以下两个二维码完全一样的内容" >> ~/_v2ray_vless_url_
 qrencode -t UTF8 $v2ray_vless_url >> ~/_v2ray_vless_url_
 qrencode -t ANSI $v2ray_vless_url >> ~/_v2ray_vless_url_
-echo "---------- END -------------"
-echo
 
 # 如果是 IPv6 小鸡，用 WARP 创建 IPv4 出站
 if [[ $netstack == "6" ]]; then
