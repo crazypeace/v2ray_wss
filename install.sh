@@ -518,7 +518,7 @@ qrencode -t ANSI $v2ray_vless_url >> ~/_v2ray_vless_url_
 
 # 是否切换为vmess协议
 echo 
-echo -e "你想切换成${magenta}Vmess${none}协议吗? Do you want to switch to ${magenta}Vmess${none} protocol?"
+echo -e "切换成${magenta}Vmess${none}协议吗? Switch to ${magenta}Vmess${none} protocol?"
 echo "如果你不懂这段话是什么意思, 请直接回车"
 read -p "$(echo -e "(${cyan}y/N${none} Default No):") " switchVmess
 if [[ -z "$switchVmess" ]]; then
