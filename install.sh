@@ -509,13 +509,64 @@ qrencode -t ANSI $v2ray_vless_url
 echo
 echo "---------- END -------------"
 echo "以上节点信息保存在 ~/_v2ray_vless_url_ 中"
-echo "如果你需要改成vmess协议请见教程 https://zelikk.blogspot.com/2022/05/v2ray-websocket-tls-vless-vmess-v2rayn-config.html"
 
 # 节点信息保存到文件中
 echo $v2ray_vless_url > ~/_v2ray_vless_url_
 echo "以下两个二维码完全一样的内容" >> ~/_v2ray_vless_url_
 qrencode -t UTF8 $v2ray_vless_url >> ~/_v2ray_vless_url_
 qrencode -t ANSI $v2ray_vless_url >> ~/_v2ray_vless_url_
+
+# 是否切换为vmess协议
+echo 
+echo -e "你想切换成${magenta}Vmess${none}协议吗?"
+echo "如果你不懂这段话是什么意思, 请直接回车"
+echo -e "Do you want to switch to Vmess protocol?"
+read -p "$(echo -e "y/N 默认Default No:") " switchVmess
+if [[ -z "$switchVmess" ]]; then
+    switchVmess='N'
+fi
+if [[ "$switchVmess" == [yY] ]]; then
+    # config.json文件中, 替换vless为vmess
+    sed -i "s/vless/vmess/g" /usr/local/etc/v2ray/config.json
+    service v2ray restart
+    
+    #生成vmess链接和二维码
+    echo "---------- V2Ray Vmess URL ----------"
+    v2ray_vmess_url="vmess://$(echo -n "\
+{\
+\"v\": \"2\",\
+\"ps\": \"Vmess_WSS_${domain}\",\
+\"add\": \"${domain}\",\
+\"port\": \"443\",\
+\"id\": \"${v2ray_id}\",\
+\"aid\": \"0\",\
+\"net\": \"ws\",\
+\"type\": \"none\",\
+\"host\": \"${domain}\",\
+\"path\": \"${path}\",\
+\"tls\": \"tls\"\
+}"\
+    | base64 -w 0)"
+
+    echo -e "${cyan}${v2ray_vmess_url}${none}"
+    echo "以下两个二维码完全一样的内容"
+    qrencode -t UTF8 $v2ray_vmess_url
+    qrencode -t ANSI $v2ray_vmess_url
+
+    echo
+    echo "---------- END -------------"
+    echo "以上节点信息保存在 ~/_v2ray_vmess_url_ 中"
+
+    echo $v2ray_vmess_url > ~/_v2ray_vmess_url_
+    echo "以下两个二维码完全一样的内容" >> ~/_v2ray_vmess_url_
+    qrencode -t UTF8 $v2ray_vmess_url >> ~/_v2ray_vmess_url_
+    qrencode -t ANSI $v2ray_vmess_url >> ~/_v2ray_vmess_url_
+    
+elif [[ "$switchVmess" == [nN] ]]; then
+    echo
+else
+    error
+fi
 
 # 如果是 IPv6 小鸡，用 WARP 创建 IPv4 出站
 if [[ $netstack == "6" ]]; then
@@ -567,4 +618,3 @@ elif  [[ $netstack == "4" ]]; then
     service caddy restart
 
 fi
-
