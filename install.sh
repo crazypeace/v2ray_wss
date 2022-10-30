@@ -275,7 +275,7 @@ if [[ -z $proxy_site ]]; then
     while :; do
         echo -e "请输入 ${magenta}一个正确的 $none ${cyan}网址$none 用来作为 ${cyan}网站的伪装$none , 例如 https://zelikk.blogspot.com"
         echo "Input a camouflage site. When GFW visit your domain, the camouflage site will display."
-        read -p "$(echo -e "(默认site: [${cyan}https://zelikk.blogspot.com$none]):")" proxy_site
+        read -p "$(echo -e "(默认site: [${cyan}https://zelikk.blogspot.com${none}]):")" proxy_site
         [[ -z $proxy_site ]] && proxy_site="https://zelikk.blogspot.com"
 
         case $proxy_site in
@@ -518,10 +518,9 @@ qrencode -t ANSI $v2ray_vless_url >> ~/_v2ray_vless_url_
 
 # 是否切换为vmess协议
 echo 
-echo -e "你想切换成${magenta}Vmess${none}协议吗?"
+echo -e "你想切换成${magenta}Vmess${none}协议吗? Do you want to switch to ${magenta}Vmess${none} protocol?"
 echo "如果你不懂这段话是什么意思, 请直接回车"
-echo -e "Do you want to switch to Vmess protocol?"
-read -p "$(echo -e "y/N 默认Default No:") " switchVmess
+read -p "$(echo -e "(${cyan}y/N${none} Default No):") " switchVmess
 if [[ -z "$switchVmess" ]]; then
     switchVmess='N'
 fi
