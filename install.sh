@@ -508,7 +508,8 @@ qrencode -t UTF8 $v2ray_vless_url
 qrencode -t ANSI $v2ray_vless_url
 echo
 echo "---------- END -------------"
-echo
+echo "以上节点信息保存在 ~/_v2ray_vless_url_ 中"
+echo "如果你需要改成vmess协议请见教程 https://zelikk.blogspot.com/2022/05/v2ray-websocket-tls-vless-vmess-v2rayn-config.html"
 
 # 节点信息保存到文件中
 echo $v2ray_vless_url > ~/_v2ray_vless_url_
