@@ -302,7 +302,7 @@ echo
 echo -e "$yellow配置 /usr/local/etc/v2ray/config.json$none"
 echo "----------------------------------------------------------------"
 cat >/usr/local/etc/v2ray/config.json <<-EOF
-{ // VLESS + WebSocket + TLS
+{ // vless + WebSocket + TLS
     "log": {
         "access": "/var/log/v2ray/access.log",
         "error": "/var/log/v2ray/error.log",
