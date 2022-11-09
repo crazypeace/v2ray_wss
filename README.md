@@ -2,6 +2,21 @@
 脚本把VLESS协议搭好后，会提示你要不要切换为Vmess协议。
 直接回车默认为`不要切换`。输入`Y`再回车就会切换为Vmess协议，并显示链接和二维码。
 
+本质上就是执行了一下下面这条命令而已。意思是把config.json文件中的vless替换为vmess
+```
+sed -i "s/vless/vmess/g" /usr/local/etc/v2ray/config.json
+```
+
+所以如果你想vmess换成vless，就用下面这条命令
+```
+sed -i "s/vmess/vless/g" /usr/local/etc/v2ray/config.json
+```
+
+当然每次换完要记得重启v2ray
+```
+service v2ray restart
+```
+
 # 2022-9-19 
 Hax / Woiden 站长时不时的把机器人验证调得很难，于是续期非常容易失败。
 那么把搭梯子的脚本简单化
