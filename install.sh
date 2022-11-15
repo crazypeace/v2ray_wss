@@ -376,7 +376,6 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
     ],
     "dns": {
         "servers": [
-            "https+local://dns.google/dns-query",
             "8.8.8.8",
             "1.1.1.1",
             "2001:4860:4860::8888",
