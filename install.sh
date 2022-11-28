@@ -432,12 +432,12 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
 // },
 // {
 //      "type": "field",
-//      "outboundTag": "force-ipv6",  // force-ipv6 // force-ipv4 // socks5-warp
+//      "outboundTag": "blocked",
 //      "domain": ["geosite:cn"]
 // },
 // {
 //      "type": "field",
-//      "outboundTag": "force-ipv6",  // force-ipv6 // force-ipv4 // socks5-warp
+//      "outboundTag": "blocked",
 //      "ip": ["geoip:cn"]
 // },
             {
