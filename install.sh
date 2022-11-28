@@ -333,6 +333,23 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
                     "tls"
                 ]
             }
+        },
+        // [inbound] 如果你把下面这一段注释掉, 那么要把上面一行末尾的英文逗号也注释掉
+        {
+            "listen":"127.0.0.1",
+            "port":1080,
+            "protocol":"socks",
+            "sniffing":{
+                "enabled":true,
+                "destOverride":[
+                    "http",
+                    "tls"
+                ]
+            },
+            "settings":{
+                "auth":"noauth",
+                "udp":false
+            }
         }
     ],
     "outbounds": [
@@ -412,6 +429,16 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
 //      "type": "field",
 //      "outboundTag": "force-ipv6",  // force-ipv6 // force-ipv4 // socks5-warp
 //      "domain": ["geosite:google"]  // ***
+// },
+// {
+//      "type": "field",
+//      "outboundTag": "force-ipv6",  // force-ipv6 // force-ipv4 // socks5-warp
+//      "domain": ["geosite:cn"]
+// },
+// {
+//      "type": "field",
+//      "outboundTag": "force-ipv6",  // force-ipv6 // force-ipv4 // socks5-warp
+//      "ip": ["geoip:cn"]
 // },
             {
                 "type": "field",
