@@ -210,11 +210,11 @@ if [[ -z $netstack ]]; then
 
     # 本机 IP
     if [[ $netstack == "4" ]]; then
-        ip=$(curl -s -4 https://api.myip.com | jq -r '.ip')
+        ip=$(curl -4s https://api.myip.la)
     elif [[ $netstack == "6" ]]; then 
-        ip=$(curl -s -6 https://api.myip.com | jq -r '.ip')
+        ip=$(curl -6s https://api.myip.la)
     else
-        ip=$(curl -s https://api.myip.com | jq -r '.ip')
+        ip=$(curl -s https://api.myip.la)
     fi
 
     if [[ $domain_resolve != $ip ]]; then
