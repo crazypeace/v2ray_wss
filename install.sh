@@ -461,6 +461,7 @@ $domain
     encode gzip
 
 #    多用户 多path
+#    使用说明 https://zelikk.blogspot.com/2022/11/v2ray-vless-vmess-websocket-cdn-tls-caddy-v2.html
 #    import Caddyfile.multiuser
 
     handle_path /$path {
