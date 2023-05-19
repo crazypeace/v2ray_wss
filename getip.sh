@@ -29,3 +29,5 @@ get_ip() {
 # from https://owo.misaka.rest/xui-routing/
 curl ipget.net
 
+# from https://github.com/233boy/v2ray
+curl -s https://www.cloudflare.com/cdn-cgi/trace | grep ip= | sed -e "s/ip=//g"
