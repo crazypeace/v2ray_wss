@@ -61,7 +61,7 @@ if [ $# -ge 1 ]; then
     #第4个参数是path
     path=${4}
     if [[ -z $path ]]; then 
-        path=$(echo $v2ray_id | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
+        path=$(echo -n $v2ray_id | tail -c 12)
     fi
 
     proxy_site="https://zelikk.blogspot.com"
@@ -118,12 +118,12 @@ echo "----------------------------------------------------------------"
 
 # UUID
 if [[ -z $v2ray_id ]]; then
-    uuid=$(cat /proc/sys/kernel/random/uuid)
+    default_uuid=$(cat /proc/sys/kernel/random/uuid)
     while :; do
         echo -e "请输入 "$yellow"V2RayID"$none" "
-        read -p "$(echo -e "(默认ID: ${cyan}${uuid}$none):")" v2ray_id
-        [ -z "$v2ray_id" ] && v2ray_id=$uuid
-        case $(echo $v2ray_id | sed 's/[a-z0-9]\{8\}-[a-z0-9]\{4\}-[a-z0-9]\{4\}-[a-z0-9]\{4\}-[a-z0-9]\{12\}//g') in
+        read -p "$(echo -e "(默认ID: ${cyan}${default_uuid}$none):")" v2ray_id
+        [ -z "$v2ray_id" ] && v2ray_id=$default_uuid
+        case $(echo -n $v2ray_id | sed -E 's/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}//g') in
         "")
             echo
             echo
@@ -247,7 +247,7 @@ fi
 
 # 分流path
 if [[ -z $path ]]; then
-    default_path=$(echo $v2ray_id | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
+    default_path=$(echo -n $v2ray_id | tail -c 12)
     while :; do
         echo -e "请输入想要 ${magenta} 用来分流的路径 $none , 例如 /v2raypath , 那么只需要输入 v2raypath 即可"
         echo "Input the WebSocket path for V2ray"
@@ -483,7 +483,7 @@ EOF
 multiuser_path=""
 user_number=10
 while [ $user_number -gt 0 ]; do
-    random_path=$(cat /proc/sys/kernel/random/uuid | sed 's/.*\([a-z0-9]\{4\}-[a-z0-9]\{12\}\)$/\1/g')
+    random_path=$(cat /proc/sys/kernel/random/uuid | tail -c 18)
 
     multiuser_path=${multiuser_path}"path /"${random_path}$'\n'
 
@@ -561,21 +561,19 @@ if [[ "$switchVmess" == [yY] ]]; then
     
     #生成vmess链接和二维码
     echo "---------- V2Ray Vmess URL ----------"
-    v2ray_vmess_url="vmess://$(echo -n "\
-{\
-\"v\": \"2\",\
-\"ps\": \"Vmess_WSS_${domain}\",\
-\"add\": \"${domain}\",\
-\"port\": \"443\",\
-\"id\": \"${v2ray_id}\",\
-\"aid\": \"0\",\
-\"net\": \"ws\",\
-\"type\": \"none\",\
-\"host\": \"${domain}\",\
-\"path\": \"${path}\",\
-\"tls\": \"tls\"\
-}"\
-    | base64 -w 0)"
+    v2ray_vmess_url="vmess://$(echo -n '{
+"v": "2",
+"ps": "Vmess_WSS_'${domain}'",
+"add": "'${domain}'",
+"port": "443",
+"id": "'${v2ray_id}'",
+"aid": "0",
+"net": "ws",
+"type": "none",
+"host": "'${domain}'",
+"path": "'${path}'",
+"tls": "tls"
+}' | base64 -w 0)"
 
     echo -e "${cyan}${v2ray_vmess_url}${none}"
     echo "以下两个二维码完全一样的内容"
