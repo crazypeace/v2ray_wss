@@ -210,11 +210,14 @@ if [[ -z $netstack ]]; then
 
     # 本机 IP
     if [[ $netstack == "4" ]]; then
-        ip=$(curl -4s https://api.myip.la)
-    elif [[ $netstack == "6" ]]; then 
-        ip=$(curl -6s https://api.myip.la)
+        # ip=$(curl -4s https://api.myip.la)
+        ip=$(curl -4s https://www.cloudflare.com/cdn-cgi/trace | grep ip= | sed -e "s/ip=//g")
+    elif [[ $netstack == "6" ]]; then     
+        # ip=$(curl -6s https://api.myip.la)
+        ip=$(curl -6s https://www.cloudflare.com/cdn-cgi/trace | grep ip= | sed -e "s/ip=//g")
     else
-        ip=$(curl -s https://api.myip.la)
+        # ip=$(curl -s https://api.myip.la)
+        ip=$(curl -s https://www.cloudflare.com/cdn-cgi/trace | grep ip= | sed -e "s/ip=//g")
     fi
 
     if [[ $domain_resolve != $ip ]]; then
