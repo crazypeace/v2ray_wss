@@ -1,3 +1,6 @@
+<details>
+    <summary>重要更新记录 (点击展开)</summary>
+    
 # 2022-10-30
 脚本把VLESS协议搭好后，会提示你要不要切换为Vmess协议。
 直接回车默认为`不要切换`。输入`Y`再回车就会切换为Vmess协议，并显示链接和二维码。
@@ -31,13 +34,14 @@ apt update && apt install -y curl && bash <(curl -L https://github.com/crazypeac
 
 相关信息
 https://github.com/v2fly/fhs-install-v2ray/issues/243
-
+</details>
+    
 # 说明
 这个一键脚本超级简单。有效语句11行(其中BBR 5行, 安装V2Ray 1行, 安装Caddy 5行)+Caddy配置文件18行(其中你需要修改4行)+V2Ray配置文件89行(其中你需要修改2行), 其它都是用来检验小白输入错误参数或者搭建条件不满足的。
 
 你如果不放心开源的脚本，你可以自己执行那11行有效语句，再修改配置文件中的6行，也能达到一样的效果。
 
-# 一键执行
+# 一键安装
 ```
 apt update
 apt install -y curl
@@ -46,8 +50,11 @@ apt install -y curl
 bash <(curl -L https://github.com/crazypeace/v2ray_wss/raw/main/install.sh)
 ```
 
-脚本中很大部分都是在校验用户的输入。其实照着下面的内容自己配置就行了。
+脚本中很大部分都是在校验用户的输入。其实照着下面的步骤自己配置就行了。
 
+<details>
+    <summary>具体手搓步骤 (点击展开)</summary>
+    
 # 打开BBR
 ```
 sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
@@ -224,6 +231,8 @@ File '/usr/share/keyrings/caddy-stable-archive-keyring.gpg' exists. Overwrite? (
 bash <(curl -L git.io/warp.sh) 4
 ```
 
+</details>
+    
 # Uninstall
 ```
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
