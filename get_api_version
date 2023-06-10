@@ -1,0 +1,2 @@
+# from https://raw.githubusercontent.com/filebrowser/get/master/get.sh
+filemanager_tag="$(${net_getter}  https://api.github.com/repos/filebrowser/filebrowser/releases/latest | grep -o '"tag_name": ".*"' | sed 's/"//g' | sed 's/tag_name: //g')"
