@@ -1,5 +1,5 @@
 # 本脚本使用
-ip=$(curl -s https://www.cloudflare.com/cdn-cgi/trace | grep ip= | sed -e "s/ip=//g")
+ip=$(curl -s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
 
 # 在很多VPS上执行无响应
 ip=$(curl -s https://api.myip.la)
@@ -33,5 +33,5 @@ get_ip() {
 curl ipget.net
 
 # from https://github.com/233boy/v2ray
-curl -s https://www.cloudflare.com/cdn-cgi/trace | grep ip= | sed -e "s/ip=//g"
+curl -s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$"
 # https://www.cloudflare.com/cdn-cgi/trace 返回的结果里面还有一个warp，可以用于判断是否通过warp访问的

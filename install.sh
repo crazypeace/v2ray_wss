@@ -210,11 +210,11 @@ if [[ -z $netstack ]]; then
 
     # 本机 IP
     if [[ $netstack == "4" ]]; then
-        ip=$(curl -4s https://www.cloudflare.com/cdn-cgi/trace | grep ip= | sed -e "s/ip=//g")
+        ip=$(curl -4s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
     elif [[ $netstack == "6" ]]; then
-        ip=$(curl -6s https://www.cloudflare.com/cdn-cgi/trace | grep ip= | sed -e "s/ip=//g")
+        ip=$(curl -6s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
     else
-        ip=$(curl -s https://www.cloudflare.com/cdn-cgi/trace | grep ip= | sed -e "s/ip=//g")
+        ip=$(curl -s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
     fi
 
     if [[ $domain_resolve != $ip ]]; then
