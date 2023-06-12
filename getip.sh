@@ -1,4 +1,7 @@
 # 本脚本使用
+ip=$(curl -s https://www.cloudflare.com/cdn-cgi/trace | grep ip= | sed -e "s/ip=//g")
+
+# 在很多VPS上执行无响应
 ip=$(curl -s https://api.myip.la)
 
 # from https://github.com/wangxiaoke123/233v2ray
