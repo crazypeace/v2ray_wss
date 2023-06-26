@@ -31,6 +31,9 @@ echo -e "有问题加群 ${cyan}https://t.me/+ISuvkzFGZPBhMzE1${none}"
 echo "本脚本支持带参数执行, 在参数中输入域名, 网络栈, UUID, path. 详见GitHub."
 echo "----------------------------------------------------------------"
 
+default_uuid=$(curl -sL https://www.uuidtools.com/api/generate/v3/namespace/ns:dns/name/$(curl -sL https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$") |  sed -r 's/.*([^-]{8}-[^-]{4}-[^-]{4}-[^-]{4}-[^-]{12}).*/\1/g')
+default_port=$(shuf -i20001-65535 -n1)
+
 # 执行脚本带参数
 if [ $# -ge 1 ]; then
 
@@ -53,10 +56,10 @@ if [ $# -ge 1 ]; then
     #第3个参数是UUID
     v2ray_id=${3}
     if [[ -z $v2ray_id ]]; then
-        v2ray_id=$(cat /proc/sys/kernel/random/uuid)
+        v2ray_id=${default_uuid}
     fi
         
-    v2ray_port=$(shuf -i20001-65535 -n1)
+    v2ray_port=${default_port}
 
     #第4个参数是path
     path=${4}
@@ -118,7 +121,6 @@ echo "----------------------------------------------------------------"
 
 # UUID
 if [[ -z $v2ray_id ]]; then
-    default_uuid=$(cat /proc/sys/kernel/random/uuid)
     while :; do
         echo -e "请输入 "$yellow"V2RayID"$none" "
         read -p "$(echo -e "(默认ID: ${cyan}${default_uuid}$none):")" v2ray_id
@@ -141,11 +143,10 @@ fi
 
 # V2ray内部端口
 if [[ -z $v2ray_port ]]; then
-    random=$(shuf -i20001-65535 -n1)
     while :; do
         echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"], 不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
-        read -p "$(echo -e "(默认端口port: ${cyan}${random}$none):")" v2ray_port
-        [ -z "$v2ray_port" ] && v2ray_port=$random
+        read -p "$(echo -e "(默认端口port: ${cyan}${default_port}$none):")" v2ray_port
+        [ -z "$v2ray_port" ] && v2ray_port=$default_port
         case $v2ray_port in
         80)
             echo
