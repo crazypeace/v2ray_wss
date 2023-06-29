@@ -31,7 +31,7 @@ echo -e "有问题加群 ${cyan}https://t.me/+ISuvkzFGZPBhMzE1${none}"
 echo "本脚本支持带参数执行, 在参数中输入域名, 网络栈, UUID, path. 详见GitHub."
 echo "----------------------------------------------------------------"
 
-default_uuid=$(curl -sL https://www.uuidtools.com/api/generate/v3/namespace/ns:dns/name/$(curl -sL https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$") |  sed -r 's/.*([^-]{8}-[^-]{4}-[^-]{4}-[^-]{4}-[^-]{12}).*/\1/g')
+default_uuid=$(curl -sL https://www.uuidtools.com/api/generate/v3/namespace/ns:dns/name/$(curl -sL https://www.cloudflare.com/cdn-cgi/trace | grep -oP 'ip=\K.*$')$(cat /proc/sys/kernel/hostname) | grep -oP '[^-]{8}-[^-]{4}-[^-]{4}-[^-]{4}-[^-]{12}')
 default_port=$(shuf -i20001-65535 -n1)
 
 # 执行脚本带参数
