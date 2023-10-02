@@ -35,3 +35,7 @@ curl ipget.net
 # from https://github.com/233boy/v2ray
 curl -s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$"
 # https://www.cloudflare.com/cdn-cgi/trace 返回的结果里面还有一个warp，可以用于判断是否通过warp访问的
+
+#
+curl -4L ifconfig.me
+curl -6L ifconfig.me
