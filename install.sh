@@ -92,6 +92,9 @@ bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/
 
 systemctl enable v2ray
 
+# 更新 geoip.dat 和 geosite.dat
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
+
 # 安装Caddy最新版本
 echo
 echo -e "$yellow安装Caddy最新版本$none"
