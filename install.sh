@@ -429,7 +429,7 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
                 ],
                 "outboundTag": "blocked"
             },
-            // [routing-rule]
+// [routing-rule]
 //{
 //     "type": "field",
 //     "domain": ["geosite:google", "geosite:openai"],  // ***
