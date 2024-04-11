@@ -241,7 +241,8 @@ apt remove -y caddy
 ```
 
 # 私货
-对于喜欢V2rayN PAC模式的朋友，欢迎使用支持VLESS链接导入功能的 [v2rayN-3.29-VLESS](https://github.com/crazypeace/v2rayN-3.29-VLESS)
+对于喜欢V2rayN PAC模式的朋友，欢迎使用支持VLESS链接导入功能的 [v2rayN-3.29-VLESS](https://github.com/crazypeace/v2rayN-3.29-VLESS)  
+最新版本支持了tls分片
 ![v2rayN_2022-07-20_22-02-43](https://user-images.githubusercontent.com/665889/180002616-c2c6da3c-78b0-4f46-8fa9-34021590646f.png)
 
 # 带参数执行
