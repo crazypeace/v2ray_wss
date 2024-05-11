@@ -474,7 +474,6 @@ $domain
     }
     handle {
         reverse_proxy $proxy_site {
-            trusted_proxies 0.0.0.0/0
             header_up Host {upstream_hostport}
         }
     }
@@ -558,7 +557,8 @@ if [[ -z "$switchVmess" ]]; then
 fi
 if [[ "$switchVmess" == [yY] ]]; then
     echo "${red}注意, 切换为vmess协议后, 刚刚的vless链接就失效了.${none}"
-
+    pause
+    
     # config.json文件中, 替换vless为vmess
     sed -i "s/vless/vmess/g" /usr/local/etc/v2ray/config.json
     service v2ray restart
