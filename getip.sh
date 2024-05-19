@@ -36,6 +36,26 @@ curl ipget.net
 curl -s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$"
 # https://www.cloudflare.com/cdn-cgi/trace 返回的结果里面还有一个warp，可以用于判断是否通过warp访问的
 
+# from TG "春风得意马蹄疾,一日看尽长安花" ID2075055328
+ip_address(){
+    InFaces=$(netstat -i | awk '{print $1}' | grep -E '^(eth|ens|eno|esp|enp|venet|vif)[0-9]+')
+
+    for i in "${InFaces[@]}"; do
+        Public_IPv4=$(curl -s4 --interface "$i" ip.gs)
+        Public_IPv6=$(curl -s6 --interface "$i" ip.gs)
+
+        # 检查是否获取到IP地址
+        if [[ -n "$Public_IPv4" ]]; then
+            ipv4_address="$Public_IPv4"
+        fi
+
+        if [[ -n "$Public_IPv6" ]]; then
+            ipv6_address="$Public_IPv6"
+        fi
+    done
+}
+
+
 #
 curl -4L ifconfig.me
 curl -6L ifconfig.me
