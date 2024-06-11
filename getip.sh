@@ -52,6 +52,9 @@ ip_address(){
         fi
     done
 }
+ip_address
+echo $Public_IPv4
+echo $Public_IPv6
 
 #
 curl -4L ifconfig.me
