@@ -214,7 +214,7 @@ if [[ -z $netstack ]]; then
     fi
 
     # 本机 IP
-    InFaces=($(ifconfig -s | awk '{print $1}' | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))  #找所有的网口
+    InFaces=($(sudo ifconfig -s | awk '{print $1}' | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))  #找所有的网口
 
     for i in "${InFaces[@]}"; do  # 从网口循环获取IP
         Public_IPv4=$(curl -4s --interface "$i" https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
