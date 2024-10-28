@@ -327,6 +327,23 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
         "loglevel": "warning"
     },
     "inbounds": [
+        // [inbound] 如果你想使用其它翻墙服务端如(HY2或者NaiveProxy)对接v2ray的分流规则, 那么取消下面一段的注释, 并让其它翻墙服务端接到下面这个socks 1080端口
+        // {
+        //     "listen":"127.0.0.1",
+        //     "port":1080,
+        //     "protocol":"socks",
+        //     "sniffing":{
+        //         "enabled":true,
+        //         "destOverride":[
+        //             "http",
+        //             "tls"
+        //         ]
+        //     },
+        //     "settings":{
+        //         "auth":"noauth",
+        //         "udp":false
+        //     }
+        // },
         {
             "listen": "127.0.0.1",
             "port": $v2ray_port,             // ***
@@ -350,23 +367,6 @@ cat >/usr/local/etc/v2ray/config.json <<-EOF
                     "http",
                     "tls"
                 ]
-            }
-        },
-        // [inbound] 如果你把下面这一段注释掉, 那么要把上面一行末尾的英文逗号也注释掉
-        {
-            "listen":"127.0.0.1",
-            "port":1080,
-            "protocol":"socks",
-            "sniffing":{
-                "enabled":true,
-                "destOverride":[
-                    "http",
-                    "tls"
-                ]
-            },
-            "settings":{
-                "auth":"noauth",
-                "udp":false
             }
         }
     ],
