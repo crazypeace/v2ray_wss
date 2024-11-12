@@ -82,7 +82,7 @@ pause
 
 # 准备工作
 apt update
-apt install -y curl sudo jq qrencode net-tools
+apt install -y curl sudo jq qrencode net-tools lsof
 
 # 指定安装V2ray v4.45.2版本
 echo
