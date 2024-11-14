@@ -218,8 +218,9 @@ if [[ -z $netstack ]]; then
     fi
 
     # 本机 IP
-    IPv4=$(curl -4s --max-time 2 https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
-    IPv6=$(curl -6s --max-time 2 https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
+    # 增加超时时间, 以免在某些网络环境下请求IPv6等待太久
+    IPv4=$(curl -4s -m 2 https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
+    IPv6=$(curl -6s -m 2 https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
     if [[ $netstack == "4" ]]; then
         ip=$IPv4
     elif [[ $netstack == "6" ]]; then
