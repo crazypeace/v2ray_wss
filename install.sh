@@ -32,6 +32,11 @@ echo "----------------------------------------------------------------"
 
 uuidSeed=$(curl -sL https://www.cloudflare.com/cdn-cgi/trace | grep -oP 'ip=\K.*$')$(cat /proc/sys/kernel/hostname)$(cat /etc/timezone)
 default_uuid=$(curl -sL https://www.uuidtools.com/api/generate/v3/namespace/ns:dns/name/${uuidSeed} | grep -oP '[^-]{8}-[^-]{4}-[^-]{4}-[^-]{4}-[^-]{12}')
+
+# 如果你想使用纯随机的UUID
+# default_uuid=$(cat /proc/sys/kernel/random/uuid)
+
+# 随机的端口
 default_port=$(shuf -i20001-65535 -n1)
 
 # 执行脚本带参数
