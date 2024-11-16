@@ -1,5 +1,20 @@
 # 本脚本使用
-ip=$(curl -s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
+InFaces=($(ls /sys/class/net/ | grep -E '^(eth|ens|eno|esp|enp|venet|vif)')) #找所有的网口
+
+for i in "${InFaces[@]}"; do  # 从网口循环获取IP
+    # 增加超时时间, 以免在某些网络环境下请求IPv6等待太久
+    Public_IPv4=$(curl -4s --interface "$i" -m 2 https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
+    Public_IPv6=$(curl -6s --interface "$i" -m 2 https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
+
+    if [[ -n "$Public_IPv4" ]]; then  # 检查是否获取到IP地址
+        IPv4="$Public_IPv4"
+    fi
+    if [[ -n "$Public_IPv6" ]]; then  # 检查是否获取到IP地址            
+        IPv6="$Public_IPv6"
+    fi
+done
+echo ${IPv4}
+echo ${IPv6}
 
 # 在很多VPS上执行无响应
 ip=$(curl -s https://api.myip.la)
@@ -36,7 +51,7 @@ curl ipget.net
 curl -s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$"
 # https://www.cloudflare.com/cdn-cgi/trace 返回的结果里面还有一个warp，可以用于判断是否通过warp访问的
 
-# from TG "春风得意马蹄疾,一日看尽长安花" ID2075055328
+# from TG "春风得意马蹄疾,一日看尽长安花" ID 1727149390
 ip_address(){
     #InFaces=($(ifconfig -s | awk '{print $1}' | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))
     InFaces=($(ls /sys/class/net/ | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))
