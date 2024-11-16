@@ -30,7 +30,25 @@ echo -e "有问题加群 ${cyan}https://t.me/+ISuvkzFGZPBhMzE1${none}"
 echo "本脚本支持带参数执行, 在参数中输入域名, 网络栈, UUID, path. 详见GitHub."
 echo "----------------------------------------------------------------"
 
-uuidSeed=$(curl -sL https://www.cloudflare.com/cdn-cgi/trace | grep -oP 'ip=\K.*$')$(cat /proc/sys/kernel/hostname)$(cat /etc/timezone)
+
+# 本机 IP
+InFaces=($(ls /sys/class/net/ | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))
+
+for i in "${InFaces[@]}"; do  # 从网口循环获取IP
+    # 增加超时时间, 以免在某些网络环境下请求IPv6等待太久
+    Public_IPv4=$(curl -4s --interface "$i" -m 2 https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
+    Public_IPv6=$(curl -6s --interface "$i" -m 2 https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
+
+    if [[ -n "$Public_IPv4" ]]; then  # 检查是否获取到IP地址
+        IPv4="$Public_IPv4"
+    fi
+    if [[ -n "$Public_IPv6" ]]; then  # 检查是否获取到IP地址            
+        IPv6="$Public_IPv6"
+    fi
+done
+
+# 通过IP, host, 时区, 生成UUID. 重装脚本不改变, 不改变节点信息, 方便个人使用
+uuidSeed=${IPv4}${IPv6}$(cat /proc/sys/kernel/hostname)$(cat /etc/timezone)
 default_uuid=$(curl -sL https://www.uuidtools.com/api/generate/v3/namespace/ns:dns/name/${uuidSeed} | grep -oP '[^-]{8}-[^-]{4}-[^-]{4}-[^-]{4}-[^-]{12}')
 
 # 如果你想使用纯随机的UUID
@@ -218,9 +236,7 @@ if [[ -z $netstack ]]; then
     fi
 
     # 本机 IP
-    # 增加超时时间, 以免在某些网络环境下请求IPv6等待太久
-    IPv4=$(curl -4s -m 2 https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
-    IPv6=$(curl -6s -m 2 https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$")
+    # 在脚本的一开头就检测了本机IP
     if [[ $netstack == "4" ]]; then
         ip=$IPv4
     elif [[ $netstack == "6" ]]; then
