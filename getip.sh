@@ -38,7 +38,7 @@ curl -s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$"
 
 # from TG "春风得意马蹄疾,一日看尽长安花" ID2075055328
 ip_address(){
-    InFaces=($(netstat -i | awk '{print $1}' | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))
+    InFaces=($(ifconfig -s | awk '{print $1}' | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))
 
     for i in "${InFaces[@]}"; do
         Public_IPv4=$(curl -s4 --interface "$i" ip.sb)
