@@ -32,7 +32,7 @@ echo "----------------------------------------------------------------"
 
 
 # 本机 IP
-InFaces=($(ls /sys/class/net/ | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))
+InFaces=($(ls /sys/class/net/ | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))     # 查本机的网卡
 
 for i in "${InFaces[@]}"; do  # 从网口循环获取IP
     # 增加超时时间, 以免在某些网络环境下请求IPv6等待太久
