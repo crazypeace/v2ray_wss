@@ -52,25 +52,26 @@ curl -s https://www.cloudflare.com/cdn-cgi/trace | grep -oP "ip=\K.*$"
 # https://www.cloudflare.com/cdn-cgi/trace 返回的结果里面还有一个warp，可以用于判断是否通过warp访问的
 
 # from TG "春风得意马蹄疾,一日看尽长安花" ID 1727149390
-ip_address(){
-    #InFaces=($(ifconfig -s | awk '{print $1}' | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))
-    InFaces=($(ls /sys/class/net/ | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))
+get_public_ip(){
+    InFaces=($(ls /sys/class/net | grep -E '^(eth|ens|eno|esp|enp|venet|veth|vif)'))
+    IP_API=(
+        "api64.ipify.org"
+        "ip.sb"
+        "ifconfig.me"
+        "icanhazip.com"
+    )
 
-    for i in "${InFaces[@]}"; do
-        Public_IPv4=$(curl -s4 -m 2 --interface "$i" ip.sb)
-        Public_IPv6=$(curl -s6 -m 2 --interface "$i" ip.sb)
+    for iface in "${InFaces[@]}"; do
+        for ip_api in "${IP_API[@]}"; do
+            IPv4=$(curl -s4 --max-time 2 --interface "$iface" "$ip_api")
+            IPv6=$(curl -s6 --max-time 2 --interface "$iface" "$ip_api")
 
-        # 检查是否获取到IP地址
-        if [[ -n "$Public_IPv4" || -n "$Public_IPv6" ]]; then
-            ipv4_address="$Public_IPv4"
-            ipv6_address="$Public_IPv6"
-            break
-        fi
+            if [[ -n "$IPv4" || -n "$IPv6" ]]; then # 检查是否获取到IP地址
+                break 2 # 获取到任一IP类型停止循环
+            fi
+        done
     done
 }
-ip_address
-echo $Public_IPv4
-echo $Public_IPv6
 
 #
 curl -4L ifconfig.me
