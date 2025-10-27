@@ -219,7 +219,6 @@ File '/usr/share/keyrings/caddy-stable-archive-keyring.gpg' exists. Overwrite? (
     }
     handle {
         reverse_proxy https://你反代伪装的网站 {     # 改这里
-            trusted_proxies 0.0.0.0/0
             header_up Host {upstream_hostport}
         }
     }
