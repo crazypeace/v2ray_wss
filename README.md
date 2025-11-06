@@ -47,7 +47,7 @@ apt update
 apt install -y curl
 ```
 ```
-bash <(curl -L https://github.com/crazypeace/v2ray_wss/raw/main/install.sh)
+bash <(curl -L https://github.com/crazypeace/v2ray_wss/raw/main/install.sh || wget -O- $_)
 ```
 
 脚本中很大部分都是在校验用户的输入。其实照着下面的步骤自己配置就行了。
