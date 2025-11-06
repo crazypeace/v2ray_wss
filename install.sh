@@ -22,6 +22,9 @@ pause() {
     echo
 }
 
+# 确保有 curl 和 wget
+apt install -y curl wget
+
 # 说明
 echo
 echo -e "$yellow此脚本仅兼容于Debian 10+系统. 如果你的系统不符合,请Ctrl+C退出脚本$none"
@@ -29,9 +32,6 @@ echo -e "可以去 ${cyan}https://github.com/crazypeace/v2ray_wss${none} 查看�
 echo -e "有问题加群 ${cyan}https://t.me/+q5WPfGjtwukyZjhl${none}"
 echo "本脚本支持带参数执行, 在参数中输入域名, 网络栈, UUID, path. 详见GitHub."
 echo "----------------------------------------------------------------"
-
-# 确保有 curl 和 wget
-apt install -y curl wget
 
 # 本机 IP
 InFaces=($(ls /sys/class/net/ | grep -E '^(eth|ens|eno|esp|enp|venet|vif)'))     # 查本机的网卡
