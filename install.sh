@@ -505,6 +505,22 @@ $domain
     handle_path /$path {
         reverse_proxy localhost:$v2ray_port
     }
+
+    handle /$path/ipTop.html {
+        uri strip_prefix /$path
+        reverse_proxy https://ip.164746.xyz {
+            header_up Host {upstream_hostport}
+        }
+    }
+
+    @api path /$path/ct /$path/cmcc /$path/cu
+    handle @api {
+        uri strip_prefix /$path
+        reverse_proxy https://cf.090227.xyz {
+            header_up Host {upstream_hostport}
+        }
+    }
+    
     handle {
         reverse_proxy $proxy_site {
             header_up Host {upstream_hostport}
